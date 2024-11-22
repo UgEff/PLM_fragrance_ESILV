@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Projet</title>
+</head>
+<body>
+    <h1>Détails du Projet</h1>
+
+    <p><strong>ID :</strong> {{ project.id }}</p>
+    <p><strong>Nom :</strong> {{ project.name }}</p>
+    <p><strong>Description :</strong> {{ project.description }}</p>
+    <p><strong>Manager :</strong> {{ project.manager }}</p>
+    <p><strong>Date de création :</strong> {{ project.create_date }}</p>
+    <p><strong>Statut :</strong> {{ project.status }}</p>
+
+    <h2>BOM</h2>
+    {% if project.Bom %}
+        <ul>
+            <li><strong>Nom :</strong> {{ project.Bom.nameBom }}</li>
+            <li><strong>Description :</strong> {{ project.Bom.descriptionBom }}</li>
+            <li><strong>Composants :</strong>
+                <ul>
+                    {% for composant in project.Bom.composantBom %}
+                        <li>{{ composant }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><strong>Spécifications :</strong> {{ project.Bom.specBom }}</li>
+        </ul>
+    {% else %}
+        <p>Aucun BOM disponible pour ce projet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('project_list') }}">Retour à la liste des projets</a>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Projets</title>
+</head>
+<body>
+    <h1>Liste des Projets</h1>
+
+    <!-- Vérifie s'il y a des projets -->
+    {% if posts %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Manager</th>
+                    <th>Date de création</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Boucle sur les projets -->
+                {% for project in posts %}
+                    <tr>
+                        <td>{{ project.id }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.description }}</td>
+                        <td>{{ project.manager }}</td>
+                        <td>{{ project.create_date }}</td>
+                        <td>{{ project.status }}</td>
+                        <td>
+                            <!-- Bouton pour afficher le BOM -->
+                            <a href="{{ url_for('project_bom', project_id=project.id) }}">Voir le BOM</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun projet trouvé.</p>
+    {% endif %}
+
+    <a href="{{ url_for('menu') }}">Retour au menu</a>
+</body>
+</html>

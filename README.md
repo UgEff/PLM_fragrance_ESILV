@@ -33,7 +33,7 @@ Connectez-vous avec un compte utilisateur.
 Créez et gérez vos projets et BOM via l'interface.
 
 ## 📂 Structure du projet
-
+```bash
 PLM_PROJET/
 ├── database/               # Gestion des données
 │   ├── init_database.py    # Script d'initialisation de la base de données SQLite
@@ -63,6 +63,7 @@ PLM_PROJET/
 ├── main.py                 # Point d'entrée de l'application (exécution)
 ├── README.md               # Documentation du projet
 └── requirements.txt        # Liste des dépendances Python nécessaires
+```
 
 ## ⚖️ Licence
 Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus d'informations.

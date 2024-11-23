@@ -82,12 +82,23 @@ def project_list():
     projet=init.load_projet()
     return render_template("project_list.html",posts=projet)
 
+@app.route("/change_status", methods=["GET", "POST"])
+def change_status():
+    print(f"Info URL (formulaire) : {request.form.to_dict()}")  # Debug
+    project_id = int(request.form.get("project_id"))
+    new_status = request.form.get("new_status")
+    print(f"ID du projet : {project_id}, Nouveau statut : {new_status}")  # Debug
+    
+    init = Load_projet()
+    init.modif_status_project(project_id, new_status)
+    
+    return redirect(url_for("project_list"))
+
+
 @app.route('/bom_list/<int:project_id>', methods=["GET"])
 def project_bom(project_id):
     init = Load_projet()
     projets = init.load_projet()
-    
-    # Trouver le projet par ID
     projet = next((p for p in projets if p["id"] == project_id), None)
     if projet:
         return render_template("bom_list.html", project=projet)

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Liste des Projets</title>
 </head>
 <body>
@@ -32,6 +33,22 @@
                         <td>{{ project.manager }}</td>
                         <td>{{ project.create_date }}</td>
                         <td>{{ project.status }}</td>
+                        <td>
+                            <form action="/change_status" method="POST">
+                                <!-- Champ caché pour l'ID du projet -->
+                                <input type="hidden" name="project_id" value="{{ project.id }}">
+                                
+                                <!-- Menu déroulant pour choisir le statut -->
+                                <select name="new_status">
+                                    <option value="IN PROGRESSE" {% if project.status == "IN PROGRESS" %}selected{% endif %}>IN PROGRESS</option>
+                                    <option value="DONE" {% if project.status == "DONE" %}selected{% endif %}>DONE</option>
+                                    <option value="CANCEL" {% if project.status == "CANCEL" %}selected{% endif %}>CANCEL</option>
+                                </select>
+                                
+                                <!-- Bouton pour soumettre le changement -->
+                                <button type="submit">Changer</button>
+                            </form>
+                        </td>
                         <td>
                             <!-- Bouton pour afficher le BOM -->
                             <a href="{{ url_for('project_bom', project_id=project.id) }}">Voir le BOM</a>

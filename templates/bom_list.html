@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Détails du Projet</title>
 </head>
 <body>
     <h1>Détails du Projet</h1>
-
-    <p><strong>ID :</strong> {{ project.id }}</p>
-    <p><strong>Nom :</strong> {{ project.name }}</p>
-    <p><strong>Description :</strong> {{ project.description }}</p>
-    <p><strong>Manager :</strong> {{ project.manager }}</p>
-    <p><strong>Date de création :</strong> {{ project.create_date }}</p>
-    <p><strong>Statut :</strong> {{ project.status }}</p>
-
+    <section>
+        <p><strong>ID :</strong> {{ project.id }}</p>
+        <p><strong>Nom :</strong> {{ project.name }}</p>
+        <p><strong>Description :</strong> {{ project.description }}</p>
+        <p><strong>Manager :</strong> {{ project.manager }}</p>
+        <p><strong>Date de création :</strong> {{ project.create_date }}</p>
+        <p><strong>Statut :</strong> {{ project.status }}</p>
+    </section>
     <h2>BOM</h2>
+    <section>
     {% if project.Bom %}
         <ul>
             <li><strong>Nom :</strong> {{ project.Bom.nameBom }}</li>
@@ -32,6 +34,7 @@
     {% else %}
         <p>Aucun BOM disponible pour ce projet.</p>
     {% endif %}
+    </section>
 
     <a href="{{ url_for('project_list') }}">Retour à la liste des projets</a>
 </body>

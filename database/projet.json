@@ -5,7 +5,7 @@
         "description": ".....",
         "manager": "pail",
         "create_date": "2024-11-14",
-        "status": "IN PROGRESS",
+        "status": "DONE",
         "status_code": 0,
         "Bom": {
             "nameBom": "bon1",
@@ -25,7 +25,7 @@
         "description": "description d'un test projet",
         "manager": "Idir",
         "create_date": "2024-11-20",
-        "status": "IN PROGRESS",
+        "status": "DONE",
         "status_code": 0,
         "Bom": {
             "nameBom": "Bom Projet 1",
@@ -44,7 +44,7 @@
         "description": "jgsbdgnklsdf,",
         "manager": "igfsgnbsjd",
         "create_date": "2024-11-22",
-        "status": "IN PROGRESS",
+        "status": "DONE",
         "status_code": 0,
         "Bom": {
             "nameBom": "gkdfgnsfg",
@@ -53,6 +53,43 @@
                 "ZEFDQF"
             ],
             "specBom": "LGJNDFKMB?L"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Projet 5",
+        "description": "description 5",
+        "manager": "Paul",
+        "create_date": "2024-11-21",
+        "status": "IN PROGRESS",
+        "status_code": 0,
+        "Bom": {
+            "nameBom": "kjgy",
+            "descriptionBom": "jkgyuh",
+            "composantBom": [
+                "klgu",
+                "khufg",
+                "gskgj,s"
+            ],
+            "specBom": "gdfkqgndfj"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Projet Test",
+        "description": "fkqdsdjhfb",
+        "manager": "lfkg",
+        "create_date": "2024-11-06",
+        "status": "IN PROGRESS",
+        "status_code": 0,
+        "Bom": {
+            "nameBom": "zekfgfjh",
+            "descriptionBom": "skdfhsdjg",
+            "composantBom": [
+                "sdkf",
+                "fqsf"
+            ],
+            "specBom": "foqdjghnq"
         }
     }
 ]

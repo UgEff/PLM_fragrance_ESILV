@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mon appli</title>
+
     </head>
     <body>
         <h1>Page de connexion</h1>
@@ -12,17 +13,17 @@
         <form action={{url_for('login')}} method="POST">
             <p>
                 <!-- Champ de type text-->
-                <label for="nom">Nom : </label>
+                <label for="nom">User : </label>
                 <input type="text" name="nom" id="nom" required> <!--required rend le champ obligatoire a la saisi-->
             </p>
             <p>
                 <!-- Champ de type password -->
-                <label for="mdp">Mot de passe : </label>
+                <label for="mdp">Password : </label>
                 <input type="password" name="mdp" id="mdp" required>
             </p>
             <p>
                 <!-- Bouton d'envoi du formulaire -->
-                <input type="submit" value="Envoyer le formulaire">
+                <input type="submit" value="CONNEXION">
             </p>
         </form>
     </body>

@@ -23,3 +23,31 @@ class Load_projet:
             return self.tab
         except Exception as e:
             print(f"LODING ERROR : {e}")
+
+        
+    def modif_status_project(self, project_id, status_new):
+        with open(path_data + "projet.json", 'r') as file:
+            data_previous = json.load(file)
+            if not isinstance(data_previous, list):
+                raise ValueError("Le fichier JSON ne contient pas une liste valide")
+        
+        
+        for project in data_previous:
+            if project.get('id') == project_id:
+                print(f"Projet trouvé avant modification : {project}")  # Avant modification
+                project['status'] = status_new
+                print(f"Projet trouvé après modification : {project}")  # Après modification
+                break
+
+        
+        
+        with open(path_data + "projet.json", 'w') as file:
+            json.dump(data_previous, file, indent=4)
+            print("Fichier JSON sauvegardé avec succès")
+
+        print(f"Chemin du fichier JSON : {path_data+'projet.json'}")
+
+
+                
+        
+

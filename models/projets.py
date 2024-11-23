@@ -122,24 +122,7 @@ class Projet:
         except Exception as e:
             print(f"ERROR CODE : {e}")
 
-#METHODE: ---- MODIFIER UN PROJET ET LE PASSER EN DONE
-    def modif_status(self,id_project):
-        status="DONE"
-        status_code=1
-        try:
-            db_path=os.path.join(path_data,"PLM.db")
-            connection = sqlite3.connect(db_path) 
-            curseur=connection.cursor()
 
-            curseur.execute("""
-                UPDATE project
-                SET status=? , status_code=?
-                WHERE id=?
-            """,(id_project,status,status_code))
-            curseur.close()
-            connection.close()
-        except Exception as e:
-            print(f"ERROR CODE : {e}")
 
 
 #init=Projet()

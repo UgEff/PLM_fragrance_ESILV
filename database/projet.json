@@ -91,5 +91,25 @@
             ],
             "specBom": "foqdjghnq"
         }
+    },
+    {
+        "id": 6,
+        "name": "Projet_1",
+        "description": "grslnhkcnbgdfg",
+        "manager": "gfsdgdsfd",
+        "create_date": "2024-12-20",
+        "status": "IN PROGRESS",
+        "status_code": 0,
+        "Bom": {
+            "nameBom": "sdqbnbfxg",
+            "descriptionBom": "ssdgsfhsdgf",
+            "composantBom": [
+                "sgdgdsd",
+                "sdgsd",
+                "gsdgsd",
+                "sgsd"
+            ],
+            "specBom": "gsdgggs"
+        }
     }
 ]

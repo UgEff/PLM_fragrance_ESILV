@@ -64,6 +64,32 @@ PLM_PROJET/
 ├── README.md               # Documentation du projet
 └── requirements.txt        # Liste des dépendances Python nécessaires
 ```
+## 🔧 Configuration
+
+1. Clonez le dépôt Git
+```bash
+    git clone <URL_DU_DEPOT>
+    cd PLM_PROJET
+```
+2. Installer les dépendances  
+Installez les dépendances nécessaires depuis le fichier requirements.txt
+```bash
+pip install -r requirements.txt
+```
+3. Configurer les variables d'environnement dans la racine  
+```makefile
+    path_data=<chemin_vers_repertoire_data>
+```
+4. Créer un répertoire data  
+Créez un répertoire nommé database à la racine du projet
+```bash
+mkdir data
+```
+5. Initialiser la base de données
+Exécutez le script d'initialisation init_database.py et creer dans le repertoire database un fichier projet.json
+
+6. Lancer l'application depuis le main.py
+
 
 ## ⚖️ Licence
 Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus d'informations.

@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='project_list.css') }}">
     <title>Liste des Projets</title>
 </head>
 <body>
     <h1>Liste des Projets</h1>
 
-    <!-- Vérifie s'il y a des projets -->
     {% if posts %}
-        <table border="1">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -21,10 +20,10 @@
                     <th>Date de création</th>
                     <th>Statut</th>
                     <th>Actions</th>
+                    <th>BOM</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Boucle sur les projets -->
                 {% for project in posts %}
                     <tr>
                         <td>{{ project.id }}</td>
@@ -35,22 +34,16 @@
                         <td>{{ project.status }}</td>
                         <td>
                             <form action="/change_status" method="POST">
-                                <!-- Champ caché pour l'ID du projet -->
                                 <input type="hidden" name="project_id" value="{{ project.id }}">
-                                
-                                <!-- Menu déroulant pour choisir le statut -->
                                 <select name="new_status">
                                     <option value="IN PROGRESSE" {% if project.status == "IN PROGRESS" %}selected{% endif %}>IN PROGRESS</option>
                                     <option value="DONE" {% if project.status == "DONE" %}selected{% endif %}>DONE</option>
                                     <option value="CANCEL" {% if project.status == "CANCEL" %}selected{% endif %}>CANCEL</option>
                                 </select>
-                                
-                                <!-- Bouton pour soumettre le changement -->
                                 <button type="submit">Changer</button>
                             </form>
                         </td>
                         <td>
-                            <!-- Bouton pour afficher le BOM -->
                             <a href="{{ url_for('project_bom', project_id=project.id) }}">Voir le BOM</a>
                         </td>
                     </tr>
@@ -58,9 +51,9 @@
             </tbody>
         </table>
     {% else %}
-        <p>Aucun projet trouvé.</p>
+        <p class="no-projects">Aucun projet trouvé.</p>
     {% endif %}
 
-    <a href="{{ url_for('menu') }}">Retour au menu</a>
+    <a href="{{ url_for('menu') }}" class="back-link">Retour au menu</a>
 </body>
 </html>

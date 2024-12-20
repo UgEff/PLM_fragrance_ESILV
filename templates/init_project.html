@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='init_project.css') }}"
+    />
     <title>Initialisation d'un projet</title>
-</head>
-<body>
-    <h1>Créer un nouveau projet</h1>
-    <form action="{{ url_for('init_project') }}" method="POST">
+  </head>
+  <body>
+    <div class="project-form-container">
+      <h1>Créer un nouveau projet</h1>
+      <form action="{{ url_for('init_project') }}" method="POST">
+        <div class="form-group">
+          <label for="titre">Titre :</label>
+          <input type="text" id="titre" name="titre" required />
+        </div>
 
-        <label for="titre">Titre :</label>
-        <input type="text" id="titre" name="titre" required>
+        <div class="form-group">
+          <label for="description">Description :</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="5"
+            required
+          ></textarea>
+        </div>
 
-        <label for="description">Description :</label>
-        <textarea id="description" name="description" rows="5" required></textarea>
+        <div class="form-group">
+          <label for="manager">Manager :</label>
+          <input type="text" id="manager" name="manager" required />
+        </div>
 
-        <label for="manager">Manager :</label>
-        <input type="text" id="manager" name="manager" required>
+        <div class="form-group">
+          <label for="create_date">Date de création :</label>
+          <input type="date" id="create_date" name="create_date" required />
+        </div>
 
-        <label for="create_date">Date de création :</label>
-        <input type="date" id="create_date" name="create_date" required>
-
-        <label for="status">Statut :</label>
-        <select id="status" name="status" required>
+        <div class="form-group">
+          <label for="status">Statut :</label>
+          <select id="status" name="status" required>
             <option value="IN PROGRESS">IN PROGRESS</option>
             <option value="DONE">DONE</option>
-        </select>
+          </select>
+        </div>
 
         <button type="submit">Créer</button>
-    </form>
+      </form>
 
-    
-    <a href="{{ url_for('menu') }}">Retour au menu</a>
-</body>
+      <a href="{{ url_for('menu') }}" class="back-link">Retour au menu</a>
+    </div>
+  </body>
 </html>

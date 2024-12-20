@@ -1,8 +1,4 @@
-Python 3.9.18
-os
-sys
 dotenv
 json
 flask
 sqlite3
-

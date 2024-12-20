@@ -1,0 +1,91 @@
+/* Style Windows 98 */
+body {
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  background-color: #c0c0c0;
+  padding: 20px;
+  color: #000;
+}
+
+h1 {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 2px solid;
+  border-color: #dfdfdf #000 #000 #dfdfdf;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 2px solid;
+  border-color: #dfdfdf #000 #000 #dfdfdf;
+}
+
+th {
+  background-color: #000080;
+  color: white;
+  font-weight: normal;
+  padding: 5px;
+  text-align: left;
+}
+
+td {
+  padding: 5px;
+  border: 1px solid #808080;
+}
+
+select,
+button,
+input {
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #dfdfdf #000 #000 #dfdfdf;
+  padding: 2px 5px;
+  font-family: "MS Sans Serif", Arial, sans-serif;
+}
+
+button {
+  min-width: 75px;
+  cursor: pointer;
+}
+
+button:active {
+  border-color: #000 #dfdfdf #dfdfdf #000;
+}
+
+a {
+  color: #000080;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 5px 10px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #dfdfdf #000 #000 #dfdfdf;
+  text-decoration: none;
+  color: #000;
+}
+
+.back-link:active {
+  border-color: #000 #dfdfdf #dfdfdf #000;
+}
+
+.no-projects {
+  background: #fff;
+  padding: 20px;
+  border: 2px solid;
+  border-color: #dfdfdf #000 #000 #dfdfdf;
+}
+
+tr:hover {
+  background-color: #e0e0e0;
+}

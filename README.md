@@ -1,8 +1,9 @@
 # PLM Projet ESILV
 
-
 ## 📖 Description
+
 **PLM Projet ESILV** est une application Flask conçue pour gérer des projets et leurs BOM (Bill of Materials). Elle permet aux utilisateurs de :
+
 - Créer et visualiser des projets.
 - Associer des BOM avec des spécifications aux projets.
 - Suivre l'évolution des statuts des projets.
@@ -12,6 +13,7 @@ L'application est idéale pour la gestion simplifiée de projets dans un environ
 ---
 
 ## ✨ Fonctionnalités
+
 - **🔐 Connexion utilisateur :** Interface pour se connecter et accéder aux fonctionnalités.
 - **📝 Création de projets :** Ajout de projets avec des détails comme nom, description et manager.
 - **📋 Gestion des BOM :** Associez des BOM (Bill of Materials) avec des spécificités à vos projets.
@@ -22,17 +24,64 @@ L'application est idéale pour la gestion simplifiée de projets dans un environ
 ---
 
 ## 🖥️ Installation
+
 ### Prérequis
+
 - Python 3.8+
 - Flask
 - Un environnement virtuel Python (optionnel mais recommandé)
 
+## 🔧 Configuration
+
+1. Clonez le dépôt Git
+
+   ```bash
+       git clone <URL_DU_DEPOT>
+       cd PLM_PROJET
+   ```
+
+2. Installer les dépendances  
+   Installez les dépendances nécessaires depuis le fichier requirements.txt
+
+   ```bash
+   pip install -r requirement.txt
+   ```
+
+3. Créer un répertoire data
+
+   ```bash
+   mkdir data
+   cp .env.example .env
+   ```
+
+4. Copier le chemin du répertoire data dans le fichier .env
+
+   ```makefile
+       PATH_DATA=<chemin_vers_repertoire_data>
+   ```
+
+5. Initialiser la base de données
+
+   ```bash
+   python database/init_database.py
+   ```
+
+6. Lancer l'application depuis le main.py
+
+   ```bash
+   python main.py
+   ```
+
+---
+
 ## 🚀 Utilisation
+
 Accédez à l'application à l'adresse : http://127.0.0.1:5000
 Connectez-vous avec un compte utilisateur.
 Créez et gérez vos projets et BOM via l'interface.
 
 ## 📂 Structure du projet
+
 ```bash
 PLM_PROJET/
 ├── database/               # Gestion des données
@@ -64,32 +113,7 @@ PLM_PROJET/
 ├── README.md               # Documentation du projet
 └── requirements.txt        # Liste des dépendances Python nécessaires
 ```
-## 🔧 Configuration
-
-1. Clonez le dépôt Git
-```bash
-    git clone <URL_DU_DEPOT>
-    cd PLM_PROJET
-```
-2. Installer les dépendances  
-Installez les dépendances nécessaires depuis le fichier requirements.txt
-```bash
-pip install -r requirements.txt
-```
-3. Configurer les variables d'environnement dans la racine  
-```makefile
-    path_data=<chemin_vers_repertoire_data>
-```
-4. Créer un répertoire data  
-Créez un répertoire nommé database à la racine du projet
-```bash
-mkdir data
-```
-5. Initialiser la base de données
-Exécutez le script d'initialisation init_database.py et creer dans le repertoire database un fichier projet.json
-
-6. Lancer l'application depuis le main.py
-
 
 ## ⚖️ Licence
+
 Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus d'informations.

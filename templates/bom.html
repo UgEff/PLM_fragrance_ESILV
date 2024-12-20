@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='bom.css') }}" />
     <title>Gestion du BOM</title>
-</head>
-<body>
-    <h1>Créer un nouveau BOM</h1>
-    <form action="{{ url_for('bom') }}" method="POST" enctype="multipart/form-data">
-        
-        <label for="bom_name">Nom du BOM :</label>
-        <input type="text" id="bom_name" name="bom_name" required>
-        <br><br>
-        
-        <label for="description_bom">Description du BOM :</label>
-        <textarea id="description_bom" name="description_bom" rows="5" required></textarea>
-        <br><br>
-        
-        <label>Composants du BOM :</label>
-        <div id="components-container">
-            <!-- Premier champ pour les composants -->
-            <div>
-                <input type="text" name="components[]" placeholder="Nom du composant" required>
-                <button type="button" onclick="removeComponent(this)">Supprimer</button>
+  </head>
+  <body>
+    <div class="bom-container">
+      <h1>Créer un nouveau BOM</h1>
+      <form
+        action="{{ url_for('bom') }}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="bom_name">Nom du BOM :</label>
+          <input type="text" id="bom_name" name="bom_name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="description_bom">Description du BOM :</label>
+          <textarea
+            id="description_bom"
+            name="description_bom"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Composants du BOM :</label>
+          <div id="components-container" class="components-container">
+            <div class="component-group">
+              <input
+                type="text"
+                name="components[]"
+                placeholder="Nom du composant"
+                required
+              />
+              <button
+                type="button"
+                class="btn-secondary"
+                onclick="removeComponent(this)"
+              >
+                Supprimer
+              </button>
             </div>
+          </div>
+          <button type="button" class="btn-add" onclick="addComponent()">
+            Ajouter un composant
+          </button>
         </div>
         <button type="button" onclick="addComponent()">Ajouter un composant</button>
         <br><br>
@@ -37,42 +62,42 @@
         <input type="url" id="linkProduct" name="linkProduct" placeholder="https://..." pattern="https?://.+">
         <br><br>
 
-        <button type="submit">Validation du Projet</button>
-    </form>
+        <div class="form-group">
+          <label for="spec">SPEC du BOM :</label>
+          <textarea id="spec" name="spec" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Validation du Projet</button>
+      </form>
+    </div>
 
     <script>
-        // Fonction pour ajouter un nouveau champ pour un composant
-        function addComponent() {
-            const container = document.getElementById('components-container');
-            
-            // Création d'un groupe de champ de composant
-            const componentGroup = document.createElement('div');
-            
-            // Création du champ d'entrée
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = 'components[]';
-            input.placeholder = 'Nom du composant';
-            input.required = true;
+      function addComponent() {
+        const container = document.getElementById("components-container");
 
-            // Création du bouton de suppression
-            const removeBtn = document.createElement('button');
-            removeBtn.type = 'button';
-            removeBtn.textContent = 'Supprimer';
-            removeBtn.onclick = () => removeComponent(removeBtn);
+        const componentGroup = document.createElement("div");
+        componentGroup.className = "component-group";
 
-            // Ajout du champ et du bouton dans le groupe
-            componentGroup.appendChild(input);
-            componentGroup.appendChild(removeBtn);
+        const input = document.createElement("input");
+        input.type = "text";
+        input.name = "components[]";
+        input.placeholder = "Nom du composant";
+        input.required = true;
 
-            // Ajout du groupe dans le conteneur
-            container.appendChild(componentGroup);
-        }
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "btn-secondary";
+        removeBtn.textContent = "Supprimer";
+        removeBtn.onclick = () => removeComponent(removeBtn);
 
-        // Fonction pour supprimer un champ de composant
-        function removeComponent(button) {
-            button.parentElement.remove();
-        }
+        componentGroup.appendChild(input);
+        componentGroup.appendChild(removeBtn);
+        container.appendChild(componentGroup);
+      }
+
+      function removeComponent(button) {
+        button.parentElement.remove();
+      }
     </script>
-</body>
+  </body>
 </html>

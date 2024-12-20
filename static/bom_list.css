@@ -1,0 +1,96 @@
+/* Style Windows 98 */
+body {
+  background-color: #c0c0c0;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+.project-container {
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 2px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1,
+h2 {
+  background-color: #000080;
+  color: white;
+  padding: 2px 4px;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.project-details,
+.bom-details {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.label {
+  font-weight: bold;
+  color: #000000;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin: 5px 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
+.back-button {
+  display: inline-block;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 6px 12px;
+  text-decoration: none;
+  color: #000000;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.back-button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.no-bom {
+  background-color: #ffffff;
+  padding: 10px;
+  border: 1px solid #808080;
+}
+
+/* Style pour les composants de la BOM */
+.bom-details ul ul {
+  border: 1px inset #ffffff;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+/* Effet de focus pour les éléments interactifs */
+.back-button:focus {
+  outline: 1px dotted #000000;
+}
+
+/* Style pour le conteneur principal avec effet de bordure 3D */
+.project-container {
+  box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #808080;
+}
+
+/* Style pour les sections avec effet surélevé */
+.project-details,
+.bom-details {
+  box-shadow: inset 1px 1px 0px #808080, inset -1px -1px 0px #ffffff;
+}

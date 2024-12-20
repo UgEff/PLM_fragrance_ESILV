@@ -30,6 +30,13 @@
                 </ul>
             </li>
             <li><strong>Spécifications :</strong> {{ project.Bom.specBom }}</li>
+            <li><strong>Lien du produit :</strong> {{ project.Bom.linkProduct }}</li>
+            {% if project.Bom.linkProduct %}
+                <a href="{{ project.Bom.linkProduct }}" target="_blank">Voir le produit</a>
+            {% else %}
+                Aucun lien disponible
+            {% endif %}
+
         </ul>
     {% else %}
         <p>Aucun BOM disponible pour ce projet.</p>

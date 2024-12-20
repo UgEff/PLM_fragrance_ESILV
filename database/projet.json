@@ -1,115 +1,20 @@
 [
     {
-        "id": 1,
-        "name": "Projet_1",
-        "description": ".....",
-        "manager": "pail",
-        "create_date": "2024-11-14",
-        "status": "DONE",
-        "status_code": 0,
-        "Bom": {
-            "nameBom": "bon1",
-            "descriptionBom": "fdqsfq",
-            "composantBom": [
-                "fgsdgsdg",
-                "gsdgfsd",
-                "gsfgsg",
-                "gsdgs"
-            ],
-            "specBom": "ssdgsdqg"
-        }
-    },
-    {
-        "id": 2,
-        "name": "Projet Test",
-        "description": "description d'un test projet",
-        "manager": "Idir",
-        "create_date": "2024-11-20",
-        "status": "DONE",
-        "status_code": 0,
-        "Bom": {
-            "nameBom": "Bom Projet 1",
-            "descriptionBom": "gnsdbgsjfb",
-            "composantBom": [
-                "compo 1",
-                "compo 2",
-                "compo 3"
-            ],
-            "specBom": "redaction des spec du BOM "
-        }
-    },
-    {
-        "id": 3,
-        "name": "projet 3",
-        "description": "jgsbdgnklsdf,",
-        "manager": "igfsgnbsjd",
-        "create_date": "2024-11-22",
-        "status": "DONE",
-        "status_code": 0,
-        "Bom": {
-            "nameBom": "gkdfgnsfg",
-            "descriptionBom": "slgnsdkl",
-            "composantBom": [
-                "ZEFDQF"
-            ],
-            "specBom": "LGJNDFKMB?L"
-        }
-    },
-    {
-        "id": 4,
-        "name": "Projet 5",
-        "description": "description 5",
-        "manager": "Paul",
-        "create_date": "2024-11-21",
-        "status": "IN PROGRESS",
-        "status_code": 0,
-        "Bom": {
-            "nameBom": "kjgy",
-            "descriptionBom": "jkgyuh",
-            "composantBom": [
-                "klgu",
-                "khufg",
-                "gskgj,s"
-            ],
-            "specBom": "gdfkqgndfj"
-        }
-    },
-    {
-        "id": 5,
-        "name": "Projet Test",
-        "description": "fkqdsdjhfb",
-        "manager": "lfkg",
-        "create_date": "2024-11-06",
-        "status": "IN PROGRESS",
-        "status_code": 0,
-        "Bom": {
-            "nameBom": "zekfgfjh",
-            "descriptionBom": "skdfhsdjg",
-            "composantBom": [
-                "sdkf",
-                "fqsf"
-            ],
-            "specBom": "foqdjghnq"
-        }
-    },
-    {
-        "id": 6,
-        "name": "Projet_1",
-        "description": "grslnhkcnbgdfg",
-        "manager": "gfsdgdsfd",
+        "id": 9,
+        "name": "gsd",
+        "description": "qfdf",
+        "manager": "fdq",
         "create_date": "2024-12-20",
         "status": "IN PROGRESS",
         "status_code": 0,
         "Bom": {
-            "nameBom": "sdqbnbfxg",
-            "descriptionBom": "ssdgsfhsdgf",
+            "nameBom": "qf",
+            "descriptionBom": "ef",
             "composantBom": [
-                "sgdgdsd",
-                "sdgsd",
-                "gsdgsd",
-                "sgsd"
+                "dq"
             ],
-            "specBom": "gsdgggs"
+            "specBom": "qf",
+            "linkProduct": "https://www.youtube.com/@Micode"
         }
     }
 ]

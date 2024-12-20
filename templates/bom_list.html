@@ -30,23 +30,24 @@
       <section class="bom-details">
         {% if project.Bom %}
         <ul>
-          <li><span class="label">Nom :</span> {{ project.Bom.nameBom }}</li>
-          <li>
-            <span class="label">Description :</span> {{
-            project.Bom.descriptionBom }}
-          </li>
-          <li>
-            <span class="label">Composants :</span>
-            <ul>
-              {% for composant in project.Bom.composantBom %}
-              <li>{{ composant }}</li>
-              {% endfor %}
-            </ul>
-          </li>
-          <li>
-            <span class="label">Spécifications :</span> {{ project.Bom.specBom
-            }}
-          </li>
+
+            <li><strong>Nom :</strong> {{ project.Bom.nameBom }}</li>
+            <li><strong>Description :</strong> {{ project.Bom.descriptionBom }}</li>
+            <li><strong>Composants :</strong>
+                <ul>
+                    {% for composant in project.Bom.composantBom %}
+                        <li>{{ composant }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><strong>Spécifications :</strong> {{ project.Bom.specBom }}</li>
+            <li><strong>Lien du produit :</strong> {{ project.Bom.linkProduct }}</li>
+            {% if project.Bom.linkProduct %}
+                <a href="{{ project.Bom.linkProduct }}" target="_blank">Voir le produit</a>
+            {% else %}
+                Aucun lien disponible
+            {% endif %}
+
         </ul>
         {% else %}
         <div class="no-bom">

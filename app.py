@@ -65,12 +65,13 @@ def bom():
             descriptionBom=donnees.get('description_bom')
             composantBom=donnees.getlist('components[]')
             specBom=donnees.get('spec')
+            linkProduct=donnees.get('linkProduct')
 
-            init.add_bom_project(nameBom,descriptionBom,composantBom,specBom)
+            init.add_bom_project(nameBom,descriptionBom,composantBom,specBom,linkProduct)
             return redirect(url_for('menu'))
         else:
             print("ERROR")
-            return render_template(url_for('bom'))
+            return render_template('bom.html')
             
     except Exception as e:
         print(f"ERROR : {e}")

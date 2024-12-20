@@ -13,10 +13,11 @@ class Bom:
         self.descriptionBom=None
         self.composantBom=[]
         self.specBom=None
+        self.linkProduct=None
                     
 
     
-    def add_bom_project(self,nameBom,descriptionBom,composantBom,specBom):
+    def add_bom_project(self,nameBom,descriptionBom,composantBom,specBom,linkProduct):
             json_path = os.path.join(path_data, "projet.json")
 
             try:
@@ -41,7 +42,8 @@ class Bom:
                     "nameBom": nameBom,
                     "descriptionBom": descriptionBom,
                     "composantBom": composantBom,
-                    "specBom": specBom
+                    "specBom": specBom,
+                    "linkProduct": linkProduct
                 }
 
                 # Sauvegarder les données mises à jour

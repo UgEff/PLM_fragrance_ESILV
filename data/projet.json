@@ -60,5 +60,40 @@
             ],
             "specBom": "asdf"
         }
+    },
+    {
+        "id": 5,
+        "name": "asdf",
+        "description": "asdf",
+        "manager": "asdf",
+        "create_date": "2024-11-28",
+        "status": "IN PROGRESS",
+        "status_code": 0,
+        "Bom": {
+            "nameBom": "asdf",
+            "descriptionBom": "asdf",
+            "composantBom": [
+                "asdf"
+            ],
+            "specBom": "asdf"
+        }
+    },
+    {
+        "id": 6,
+        "name": "asdf",
+        "description": "asdf",
+        "manager": "asdf",
+        "create_date": "2024-12-08",
+        "status": "IN PROGRESS",
+        "status_code": 0,
+        "Bom": {
+            "nameBom": "asdf",
+            "descriptionBom": "asdf",
+            "composantBom": [
+                "asdf",
+                "asdf"
+            ],
+            "specBom": "asdf"
+        }
     }
 ]

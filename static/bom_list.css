@@ -1,77 +1,96 @@
+/* Style Windows 98 */
+body {
+  background-color: #c0c0c0;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
 .project-container {
-  max-width: 1200px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 2px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1,
 h2 {
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 0.5rem;
-  margin-bottom: 2rem;
+  background-color: #000080;
+  color: white;
+  padding: 2px 4px;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .project-details,
 .bom-details {
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  margin-bottom: 2rem;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 10px;
+  margin: 10px 0;
 }
 
-.project-details p {
-  margin: 0.5rem 0;
-  line-height: 1.6;
+.label {
+  font-weight: bold;
+  color: #000000;
 }
 
-.bom-details ul {
-  list-style: none;
-  padding: 0;
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin: 5px 0;
 }
 
-.bom-details li {
-  margin: 0.8rem 0;
-}
-
-.bom-details ul ul {
-  margin-left: 2rem;
-  border-left: 2px solid #3498db;
-  padding-left: 1rem;
+li {
+  margin: 5px 0;
 }
 
 .back-button {
   display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background-color: #3498db;
-  color: white;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 6px 12px;
   text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  color: #000000;
+  font-size: 0.9em;
+  margin-top: 10px;
 }
 
-.back-button:hover {
-  background-color: #2980b9;
-}
-
-.label {
-  font-weight: 600;
-  color: #2c3e50;
-  margin-right: 0.5rem;
-}
-
-body {
-  background-color: #f5f6fa;
-  margin: 0;
-  padding: 0;
+.back-button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
 }
 
 .no-bom {
-  background-color: #f8f9fa;
-  padding: 2rem;
-  text-align: center;
-  border-radius: 8px;
-  color: #6c757d;
+  background-color: #ffffff;
+  padding: 10px;
+  border: 1px solid #808080;
+}
+
+/* Style pour les composants de la BOM */
+.bom-details ul ul {
+  border: 1px inset #ffffff;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+/* Effet de focus pour les éléments interactifs */
+.back-button:focus {
+  outline: 1px dotted #000000;
+}
+
+/* Style pour le conteneur principal avec effet de bordure 3D */
+.project-container {
+  box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #808080;
+}
+
+/* Style pour les sections avec effet surélevé */
+.project-details,
+.bom-details {
+  box-shadow: inset 1px 1px 0px #808080, inset -1px -1px 0px #ffffff;
 }

@@ -7,53 +7,55 @@
     <title>Liste des Projets</title>
 </head>
 <body>
-    <h1>Liste des Projets</h1>
+    <div class="window">
+        <h1>Liste des Projets</h1>
 
-    {% if posts %}
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Manager</th>
-                    <th>Date de création</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                    <th>BOM</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for project in posts %}
+        {% if posts %}
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ project.id }}</td>
-                        <td>{{ project.name }}</td>
-                        <td>{{ project.description }}</td>
-                        <td>{{ project.manager }}</td>
-                        <td>{{ project.create_date }}</td>
-                        <td>{{ project.status }}</td>
-                        <td>
-                            <form action="/change_status" method="POST">
-                                <input type="hidden" name="project_id" value="{{ project.id }}">
-                                <select name="new_status">
-                                    <option value="IN PROGRESSE" {% if project.status == "IN PROGRESS" %}selected{% endif %}>IN PROGRESS</option>
-                                    <option value="DONE" {% if project.status == "DONE" %}selected{% endif %}>DONE</option>
-                                    <option value="CANCEL" {% if project.status == "CANCEL" %}selected{% endif %}>CANCEL</option>
-                                </select>
-                                <button type="submit">Changer</button>
-                            </form>
-                        </td>
-                        <td>
-                            <a href="{{ url_for('project_bom', project_id=project.id) }}">Voir le BOM</a>
-                        </td>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Manager</th>
+                        <th>Date de création</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                        <th>BOM</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-projects">Aucun projet trouvé.</p>
-    {% endif %}
+                </thead>
+                <tbody>
+                    {% for project in posts %}
+                        <tr>
+                            <td>{{ project.id }}</td>
+                            <td>{{ project.name }}</td>
+                            <td>{{ project.description }}</td>
+                            <td>{{ project.manager }}</td>
+                            <td>{{ project.create_date }}</td>
+                            <td>{{ project.status }}</td>
+                            <td>
+                                <form action="/change_status" method="POST">
+                                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                                    <select name="new_status">
+                                        <option value="IN PROGRESSE" {% if project.status == "IN PROGRESS" %}selected{% endif %}>IN PROGRESS</option>
+                                        <option value="DONE" {% if project.status == "DONE" %}selected{% endif %}>DONE</option>
+                                        <option value="CANCEL" {% if project.status == "CANCEL" %}selected{% endif %}>CANCEL</option>
+                                    </select>
+                                    <button type="submit">Changer</button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('project_bom', project_id=project.id) }}">Voir le BOM</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-projects">Aucun projet trouvé.</p>
+        {% endif %}
 
-    <a href="{{ url_for('menu') }}" class="back-link">Retour au menu</a>
+        <a href="{{ url_for('menu') }}" class="back-link">← Retour au menu</a>
+    </div>
 </body>
 </html>

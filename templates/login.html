@@ -4,27 +4,93 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mon appli</title>
+        <style>
+            body {
+                background-color: #c0c0c0;
+                font-family: 'MS Sans Serif', Tahoma, sans-serif;
+                padding: 20px;
+            }
 
+            .window {
+                background-color: #c0c0c0;
+                border: 2px solid;
+                border-color: #ffffff #808080 #808080 #ffffff;
+                box-shadow: 1px 1px 0 0 #000;
+                padding: 2px;
+                width: 300px;
+                margin: 50px auto;
+            }
+
+            .title-bar {
+                background: linear-gradient(90deg, #000080, #1084d0);
+                padding: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .title-bar-text {
+                color: white;
+                font-weight: bold;
+                font-size: 12px;
+            }
+
+            .window-body {
+                padding: 10px;
+                background-color: #c0c0c0;
+            }
+
+            input[type="text"], input[type="password"] {
+                border: 2px solid;
+                border-color: #808080 #ffffff #ffffff #808080;
+                background-color: #ffffff;
+                padding: 3px;
+                width: 200px;
+            }
+
+            input[type="submit"] {
+                background-color: #c0c0c0;
+                border: 2px solid;
+                border-color: #ffffff #808080 #808080 #ffffff;
+                padding: 5px 20px;
+                cursor: pointer;
+                font-family: 'MS Sans Serif', Tahoma, sans-serif;
+            }
+
+            input[type="submit"]:active {
+                border-color: #808080 #ffffff #ffffff #808080;
+            }
+
+            label {
+                display: inline-block;
+                width: 80px;
+            }
+
+            p {
+                margin: 10px 0;
+            }
+        </style>
     </head>
     <body>
-        <h1>Page de connexion</h1>
-        <!--mathod "GET" or "POST"-->
-        <!--action atribue qui definie a qui vont etre transmis les données-->
-        <form action={{url_for('login')}} method="POST">
-            <p>
-                <!-- Champ de type text-->
-                <label for="nom">User : </label>
-                <input type="text" name="nom" id="nom" required> <!--required rend le champ obligatoire a la saisi-->
-            </p>
-            <p>
-                <!-- Champ de type password -->
-                <label for="mdp">Password : </label>
-                <input type="password" name="mdp" id="mdp" required>
-            </p>
-            <p>
-                <!-- Bouton d'envoi du formulaire -->
-                <input type="submit" value="CONNEXION">
-            </p>
-        </form>
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">Connexion</div>
+            </div>
+            <div class="window-body">
+                <form action={{url_for('login')}} method="POST">
+                    <p>
+                        <label for="nom">User : </label>
+                        <input type="text" name="nom" id="nom" required>
+                    </p>
+                    <p>
+                        <label for="mdp">Password : </label>
+                        <input type="password" name="mdp" id="mdp" required>
+                    </p>
+                    <p style="text-align: center;">
+                        <input type="submit" value="CONNEXION">
+                    </p>
+                </form>
+            </div>
+        </div>
     </body>
     </html>

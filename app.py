@@ -22,7 +22,9 @@ def home():
 
 @app.route('/menu')
 def menu():
-    return render_template('menu.html')
+    if 'username' not in session:
+        return redirect(url_for('home'))
+    return render_template('menu.html', is_admin=(session.get('role_code') == 1))
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -31,11 +33,14 @@ def login():
         if request.method == "POST":
             donnees = request.form
             user = donnees.get('nom')
-            mdp = donnees.get("mdp") 
-            verif_co = init.valid_connection(user, mdp) 
-            if verif_co == 1:
-                print("CONNEXION ETABLIE") 
-                return render_template('menu.html')
+            mdp = donnees.get("mdp")
+            result = init.valid_connection(user, mdp)
+            if result["success"]:
+                # Stocker les informations de l'utilisateur dans la session
+                session['username'] = user
+                session['role_code'] = result["role_code"]
+                print("CONNEXION ETABLIE")
+                return redirect(url_for('menu'))
             else:
                 flash("Connexion échouée. Veuillez vérifier vos identifiants.", "warning")
                 return redirect(url_for('home'))
@@ -280,3 +285,58 @@ def logout():
     # Rediriger vers la page de connexion avec un message
     flash("Vous avez été déconnecté avec succès.", "success")
     return redirect(url_for('home'))
+
+@app.route('/create_user', methods=['GET', 'POST'])
+def create_user():
+    # Vérifier si l'utilisateur est connecté et est admin
+    if 'username' not in session or session.get('role_code') != 1:
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+
+    if request.method == 'POST':
+        try:
+            username = request.form.get('username')
+            password = request.form.get('password')
+            role = request.form.get('role')
+
+            user = User()
+            user.create_user(username, password, role)
+            
+            flash("Utilisateur créé avec succès", "success")
+            return redirect(url_for('menu'))
+        except Exception as e:
+            flash(f"Erreur lors de la création de l'utilisateur : {str(e)}", "error")
+            return render_template('create_user.html')
+    
+    return render_template('create_user.html')
+
+@app.route('/user_list')
+def user_list():
+    # Vérifier si l'utilisateur est connecté et est admin
+    if 'username' not in session or session.get('role_code') != 1:
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+    
+    try:
+        user = User()
+        users = user.get_all_users()
+        return render_template('user_list.html', users=users)
+    except Exception as e:
+        flash(f"Erreur lors du chargement des utilisateurs : {str(e)}", "error")
+        return redirect(url_for('menu'))
+
+@app.route('/delete_user/<username>', methods=['POST'])
+def delete_user(username):
+    # Vérifier si l'utilisateur est connecté et est admin
+    if 'username' not in session or session.get('role_code') != 1:
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+    
+    try:
+        user = User()
+        user.delete_user(username)
+        flash(f"L'utilisateur {username} a été supprimé avec succès", "success")
+    except Exception as e:
+        flash(f"Erreur lors de la suppression : {str(e)}", "error")
+    
+    return redirect(url_for('user_list'))

@@ -52,10 +52,12 @@
         background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
       }
 
-      .icon {
-        width: 24px;
-        height: 24px;
+      .emoji-icon {
+        font-size: 1.2em;
         margin-right: 10px;
+        width: 24px;
+        display: inline-block;
+        text-align: center;
       }
 
       .logout-button {
@@ -86,21 +88,31 @@
       <div class="window-content">
         <div class="menu">
           <a href="{{ url_for('init_project') }}" class="menu-item">
-            <img src="{{ url_for('static', filename='icons/new.png') }}" class="icon" alt="✨">
+            <span class="emoji-icon">✨</span>
             Nouveau Projet
           </a>
           <a href="{{ url_for('project_list') }}" class="menu-item">
-            <img src="{{ url_for('static', filename='icons/list.png') }}" class="icon" alt="📋">
+            <span class="emoji-icon">📋</span>
             Liste Projets
           </a>
           <a href="{{ url_for('comments') }}" class="menu-item">
-            <img src="{{ url_for('static', filename='icons/comment.png') }}" class="icon" alt="💬">
+            <span class="emoji-icon">💬</span>
             Ajouter Commentaire
           </a>
           <a href="{{ url_for('view_comments') }}" class="menu-item">
-            <img src="{{ url_for('static', filename='icons/view.png') }}" class="icon" alt="👀">
+            <span class="emoji-icon">👀</span>
             Voir Commentaires
           </a>
+          {% if is_admin %}
+          <a href="{{ url_for('create_user') }}" class="menu-item">
+            <span class="emoji-icon">👤</span>
+            Créer Utilisateur
+          </a>
+          <a href="{{ url_for('user_list') }}" class="menu-item">
+            <span class="emoji-icon">📋</span>
+            Liste des Utilisateurs
+          </a>
+          {% endif %}
         </div>
       </div>
     </div>

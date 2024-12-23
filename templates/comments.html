@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Commentaires - PLM System</title>
+    <style>
+        body {
+            background: #ECE9D8;
+            font-family: 'Tahoma', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .window {
+            background: #FFFFFF;
+            border: 1px solid #0A246A;
+            border-radius: 3px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .window-title {
+            background: linear-gradient(180deg, #0A246A, #A6CAF0);
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+        }
+
+        .window-content {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #003399;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #7F9DB9;
+            border-radius: 2px;
+            background: #FFFFFF;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+            border: 1px solid #7F9DB9;
+            border-radius: 3px;
+            padding: 5px 15px;
+            color: #003399;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+        }
+
+        .error-message {
+            background: #FFF1F1;
+            border: 1px solid #FFD7D7;
+            color: #DD3C3C;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="window-title">
+            Gestion des Commentaires
+        </div>
+        <div class="window-content">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="error-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('add_comment') }}" method="POST">
+                <div class="form-group">
+                    <label for="project">Projet:</label>
+                    <select id="project" name="project_id" required onchange="loadBoms(this.value)">
+                        <option value="">Sélectionner un projet...</option>
+                        {% for project in projects %}
+                            <option value="{{ project.id }}">{{ project.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bom">BOM:</label>
+                    <select id="bom" name="bom_name" required disabled>
+                        <option value="">Sélectionner un BOM...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">Commentaire:</label>
+                    <textarea id="comment" name="comment" required></textarea>
+                </div>
+
+                <button type="submit" class="btn">Ajouter le commentaire</button>
+            </form>
+
+            <div style="margin-top: 16px;">
+                <a href="{{ url_for('view_comments') }}" class="btn">Voir les commentaires</a>
+                <a href="{{ url_for('menu') }}" class="btn">Retour au menu</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadBoms(projectId) {
+            const bomSelect = document.getElementById('bom');
+            bomSelect.disabled = true;
+            bomSelect.innerHTML = '<option value="">Chargement...</option>';
+
+            if (!projectId) {
+                bomSelect.innerHTML = '<option value="">Sélectionner un BOM...</option>';
+                return;
+            }
+
+            fetch(`/get_boms/${projectId}`)
+                .then(response => response.json())
+                .then(boms => {
+                    bomSelect.innerHTML = '<option value="">Sélectionner un BOM...</option>';
+                    boms.forEach(bom => {
+                        const option = document.createElement('option');
+                        option.value = bom.nameBom;
+                        option.textContent = bom.nameBom;
+                        bomSelect.appendChild(option);
+                    });
+                    bomSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    bomSelect.innerHTML = '<option value="">Erreur de chargement</option>';
+                });
+        }
+    </script>
+</body>
+</html>

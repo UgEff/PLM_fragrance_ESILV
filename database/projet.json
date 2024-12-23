@@ -1,20 +1,53 @@
 [
     {
-        "id": 9,
-        "name": "gsd",
-        "description": "qfdf",
-        "manager": "fdq",
-        "create_date": "2024-12-20",
+        "id": 1,
+        "name": "Chanel n\u00b05",
+        "description": "Premier parfum de la gamme 2025",
+        "manager": "Idir GUETTAB",
+        "create_date": "2025-01-01",
         "status": "IN PROGRESS",
         "status_code": 0,
-        "Bom": {
-            "nameBom": "qf",
-            "descriptionBom": "ef",
-            "composantBom": [
-                "dq"
-            ],
-            "specBom": "qf",
-            "linkProduct": "https://www.youtube.com/@Micode"
-        }
+        "Boms": [
+            {
+                "nameBom": "Pompe",
+                "descriptionBom": "Pompe du parfum dor\u00e9e",
+                "composantBom": [
+                    "Acier",
+                    "ressort",
+                    "plastique"
+                ],
+                "specBom": "qualiter premium",
+                "linkProduct": "https://www.google.com/search?client=firefox-b-d&q=youtube"
+            },
+            {
+                "nameBom": "corps",
+                "descriptionBom": "corps test",
+                "composantBom": [
+                    "cofk"
+                ],
+                "specBom": "fofjjff",
+                "linkProduct": "https://google.com"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Yves SAint laurent",
+        "description": "test pour YSL",
+        "manager": "Killyan",
+        "create_date": "2025-10-01",
+        "status": "IN PROGRESS",
+        "status_code": 0,
+        "Boms": [
+            {
+                "nameBom": "parfun",
+                "descriptionBom": "parfum",
+                "composantBom": [
+                    "pibfn"
+                ],
+                "specBom": ";,kdld",
+                "linkProduct": "https://www.sephora.fr/p/bleu-de-chanel---eau-de-parfum-P1922003.html"
+            }
+        ]
     }
 ]

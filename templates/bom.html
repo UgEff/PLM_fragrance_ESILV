@@ -2,97 +2,137 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='bom.css') }}" />
-    <title>Gestion du BOM</title>
+    <title>Ajouter un BOM - PLM System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+      body {
+        background: #ECE9D8;
+        font-family: 'Tahoma', sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      
+      .window {
+        background: #FFFFFF;
+        border: 1px solid #0A246A;
+        border-radius: 3px;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        margin: 20px auto;
+        max-width: 800px;
+      }
+
+      .window-title {
+        background: linear-gradient(180deg, #0A246A, #A6CAF0);
+        color: white;
+        padding: 6px 10px;
+        font-weight: bold;
+      }
+
+      .window-content {
+        padding: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #003399;
+      }
+
+      input[type="text"],
+      input[type="url"],
+      textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #7F9DB9;
+        border-radius: 2px;
+        background: #FFFFFF;
+        box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+      }
+
+      .component-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+        border: 1px solid #7F9DB9;
+        border-radius: 3px;
+        padding: 5px 15px;
+        color: #003399;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+      }
+
+      a.btn {
+        text-decoration: none;
+        display: inline-block;
+      }
+    </style>
   </head>
   <body>
-    <div class="bom-container">
-      <h1>Créer un nouveau BOM</h1>
-      <form
-        action="{{ url_for('bom') }}"
-        method="POST"
-        enctype="multipart/form-data"
-      >
-        <div class="form-group">
-          <label for="bom_name">Nom du BOM :</label>
-          <input type="text" id="bom_name" name="bom_name" required />
-        </div>
+    <div class="window">
+      <div class="window-title">
+        Ajouter un BOM
+      </div>
+      <div class="window-content">
+        <form action="{{ url_for('bom') }}" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="project_id" value="{{ project_id }}">
+          
+          <div class="form-group">
+            <label for="bom_name">Nom du BOM:</label>
+            <input type="text" id="bom_name" name="bom_name" required />
+          </div>
 
-        <div class="form-group">
-          <label for="description_bom">Description du BOM :</label>
-          <textarea
-            id="description_bom"
-            name="description_bom"
-            rows="5"
-            required
-          ></textarea>
-        </div>
+          <div class="form-group">
+            <label for="description_bom">Description:</label>
+            <textarea id="description_bom" name="description_bom" required></textarea>
+          </div>
 
-        <div class="form-group">
-          <label>Composants du BOM :</label>
-          <div id="components-container" class="components-container">
-            <div class="component-group">
-              <input
-                type="text"
-                name="components[]"
-                placeholder="Nom du composant"
-                required
-              />
-              <button
-                type="button"
-                class="btn-secondary"
-                onclick="removeComponent(this)"
-              >
-                Supprimer
-              </button>
+          <div class="form-group">
+            <label>Composants:</label>
+            <div id="components-container">
+              <div class="component-group">
+                <input type="text" name="components[]" required />
+                <button type="button" class="btn" onclick="addComponent()">+</button>
+              </div>
             </div>
           </div>
-          <button type="button" class="btn-add" onclick="addComponent()">
-            Ajouter un composant
-          </button>
-        </div>
-        <button type="button" onclick="addComponent()">Ajouter un composant</button>
-        <br><br>
-        
-        <label for="spec">SPEC du BOM :</label>
-        <textarea id="spec" name="spec" rows="5" required></textarea>
-        <br><br>
-        <label for="linkProduct">Lien du produit :</label>
-        <input type="url" id="linkProduct" name="linkProduct" placeholder="https://..." pattern="https?://.+">
-        <br><br>
 
-        <div class="form-group">
-          <label for="spec">SPEC du BOM :</label>
-          <textarea id="spec" name="spec" rows="5" required></textarea>
-        </div>
+          <div class="form-group">
+            <label for="spec">Spécifications:</label>
+            <textarea id="spec" name="spec" required></textarea>
+          </div>
 
-        <button type="submit" class="btn-primary">Validation du Projet</button>
-      </form>
+          <div class="form-group">
+            <label for="linkProduct">Lien du produit:</label>
+            <input type="url" id="linkProduct" name="linkProduct" placeholder="https://..." pattern="https?://.+" required />
+          </div>
+
+          <button type="submit" class="btn">Ajouter le BOM</button>
+          <a href="{{ url_for('project_list') }}" class="btn">Retour à la liste</a>
+        </form>
+      </div>
     </div>
 
     <script>
       function addComponent() {
-        const container = document.getElementById("components-container");
-
-        const componentGroup = document.createElement("div");
-        componentGroup.className = "component-group";
-
-        const input = document.createElement("input");
-        input.type = "text";
-        input.name = "components[]";
-        input.placeholder = "Nom du composant";
-        input.required = true;
-
-        const removeBtn = document.createElement("button");
-        removeBtn.type = "button";
-        removeBtn.className = "btn-secondary";
-        removeBtn.textContent = "Supprimer";
-        removeBtn.onclick = () => removeComponent(removeBtn);
-
-        componentGroup.appendChild(input);
-        componentGroup.appendChild(removeBtn);
-        container.appendChild(componentGroup);
+        const container = document.getElementById('components-container');
+        const newGroup = document.createElement('div');
+        newGroup.className = 'component-group';
+        newGroup.innerHTML = `
+          <input type="text" name="components[]" required>
+          <button type="button" class="btn" onclick="removeComponent(this)">-</button>
+        `;
+        container.appendChild(newGroup);
       }
 
       function removeComponent(button) {

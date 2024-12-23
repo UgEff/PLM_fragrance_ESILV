@@ -3,53 +3,131 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='init_project.css') }}"
-    />
     <title>Initialisation d'un projet</title>
+    <style>
+      body {
+        background: #ECE9D8;
+        font-family: 'Tahoma', sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .window {
+        background: #FFFFFF;
+        border: 1px solid #0A246A;
+        border-radius: 3px;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        margin: 20px auto;
+        max-width: 600px;
+      }
+
+      .window-title {
+        background: linear-gradient(180deg, #0A246A, #A6CAF0);
+        color: white;
+        padding: 6px 10px;
+        font-weight: bold;
+      }
+
+      .window-content {
+        padding: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #003399;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #7F9DB9;
+        border-radius: 2px;
+        background: #FFFFFF;
+        box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+      }
+
+      button {
+        background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+        border: 1px solid #7F9DB9;
+        border-radius: 3px;
+        padding: 5px 15px;
+        color: #003399;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+      }
+
+      .back-link {
+        display: inline-block;
+        background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+        border: 1px solid #7F9DB9;
+        border-radius: 3px;
+        padding: 5px 15px;
+        color: #003399;
+        text-decoration: none;
+        margin-top: 10px;
+      }
+
+      .back-link:hover {
+        background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+      }
+    </style>
   </head>
   <body>
-    <div class="project-form-container">
-      <h1>Créer un nouveau projet</h1>
-      <form action="{{ url_for('init_project') }}" method="POST">
-        <div class="form-group">
-          <label for="titre">Titre :</label>
-          <input type="text" id="titre" name="titre" required />
-        </div>
+    <div class="window">
+      <div class="window-title">
+        Initialisation d'un projet
+      </div>
+      <div class="window-content">
+        <form action="{{ url_for('init_project') }}" method="POST">
+          <div class="form-group">
+            <label for="titre">Titre :</label>
+            <input type="text" id="titre" name="titre" required />
+          </div>
 
-        <div class="form-group">
-          <label for="description">Description :</label>
-          <textarea
-            id="description"
-            name="description"
-            rows="5"
-            required
-          ></textarea>
-        </div>
+          <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="5"
+              required
+            ></textarea>
+          </div>
 
-        <div class="form-group">
-          <label for="manager">Manager :</label>
-          <input type="text" id="manager" name="manager" required />
-        </div>
+          <div class="form-group">
+            <label for="manager">Manager :</label>
+            <input type="text" id="manager" name="manager" required />
+          </div>
 
-        <div class="form-group">
-          <label for="create_date">Date de création :</label>
-          <input type="date" id="create_date" name="create_date" required />
-        </div>
+          <div class="form-group">
+            <label for="create_date">Date de création :</label>
+            <input type="date" id="create_date" name="create_date" required />
+          </div>
 
-        <div class="form-group">
-          <label for="status">Statut :</label>
-          <select id="status" name="status" required>
-            <option value="IN PROGRESS">IN PROGRESS</option>
-            <option value="DONE">DONE</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="status">Statut :</label>
+            <select id="status" name="status" required>
+              <option value="IN PROGRESS">IN PROGRESS</option>
+              <option value="DONE">DONE</option>
+            </select>
+          </div>
 
-        <button type="submit">Créer</button>
-      </form>
+          <button type="submit">Créer</button>
+        </form>
 
-      <a href="{{ url_for('menu') }}" class="back-link">Retour au menu</a>
+        <a href="{{ url_for('menu') }}" class="back-link">Retour au menu</a>
+      </div>
     </div>
   </body>
 </html>

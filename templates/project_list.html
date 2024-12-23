@@ -2,15 +2,93 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='project_list.css') }}">
-    <title>Liste des Projets</title>
+    <title>Liste des Projets - PLM System</title>
+    <style>
+        body {
+            background: #ECE9D8;
+            font-family: 'Tahoma', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .window {
+            background: #FFFFFF;
+            border: 1px solid #0A246A;
+            border-radius: 3px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .window-title {
+            background: linear-gradient(180deg, #0A246A, #A6CAF0);
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+        }
+
+        .window-content {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th {
+            background: linear-gradient(180deg, #E3EFFF, #D5E5F7);
+            color: #003399;
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #7F9DB9;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #7F9DB9;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F5F9FF;
+        }
+
+        tr:hover {
+            background-color: #E8F1FF;
+        }
+
+        .status {
+            width: 100%;
+            padding: 4px;
+            border: 1px solid #7F9DB9;
+            border-radius: 2px;
+            background: #FFFFFF;
+            color: #003399;
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+            border: 1px solid #7F9DB9;
+            border-radius: 3px;
+            padding: 5px 15px;
+            color: #003399;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+        }
+    </style>
 </head>
 <body>
     <div class="window">
-        <h1>Liste des Projets</h1>
-
-        {% if posts %}
+        <div class="window-title">
+            Liste des Projets
+        </div>
+        <div class="window-content">
             <table>
                 <thead>
                     <tr>
@@ -19,43 +97,39 @@
                         <th>Description</th>
                         <th>Manager</th>
                         <th>Date de création</th>
-                        <th>Statut</th>
+                        <th>Status</th>
                         <th>Actions</th>
-                        <th>BOM</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for project in posts %}
-                        <tr>
-                            <td>{{ project.id }}</td>
-                            <td>{{ project.name }}</td>
-                            <td>{{ project.description }}</td>
-                            <td>{{ project.manager }}</td>
-                            <td>{{ project.create_date }}</td>
-                            <td>{{ project.status }}</td>
-                            <td>
-                                <form action="/change_status" method="POST">
-                                    <input type="hidden" name="project_id" value="{{ project.id }}">
-                                    <select name="new_status">
-                                        <option value="IN PROGRESSE" {% if project.status == "IN PROGRESS" %}selected{% endif %}>IN PROGRESS</option>
-                                        <option value="DONE" {% if project.status == "DONE" %}selected{% endif %}>DONE</option>
-                                        <option value="CANCEL" {% if project.status == "CANCEL" %}selected{% endif %}>CANCEL</option>
-                                    </select>
-                                    <button type="submit">Changer</button>
-                                </form>
-                            </td>
-                            <td>
-                                <a href="{{ url_for('project_bom', project_id=project.id) }}">Voir le BOM</a>
-                            </td>
-                        </tr>
+                    {% for post in posts %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.name }}</td>
+                        <td>{{ post.description }}</td>
+                        <td>{{ post.manager }}</td>
+                        <td>{{ post.create_date }}</td>
+                        <td>
+                            <form action="{{ url_for('change_status') }}" method="POST">
+                                <input type="hidden" name="project_id" value="{{ post.id }}">
+                                <select name="new_status" onchange="this.form.submit()" class="status">
+                                    <option value="IN PROGRESS" {% if post.status == "IN PROGRESS" %}selected{% endif %}>En cours</option>
+                                    <option value="COMPLETED" {% if post.status == "COMPLETED" %}selected{% endif %}>Terminé</option>
+                                    <option value="CANCELED" {% if post.status == "CANCELED" %}selected{% endif %}>Annulé</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('project_bom', project_id=post.id) }}" class="btn">Voir BOMs</a>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        {% else %}
-            <p class="no-projects">Aucun projet trouvé.</p>
-        {% endif %}
-
-        <a href="{{ url_for('menu') }}" class="back-link">← Retour au menu</a>
+            <div style="margin-top: 16px;">
+                <a href="{{ url_for('menu') }}" class="btn">Retour au menu</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter des BOMs</title>
+    <style>
+        body {
+            background: #ECE9D8;
+            font-family: 'Tahoma', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .window {
+            background: #FFFFFF;
+            border: 1px solid #0A246A;
+            border-radius: 3px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .window-title {
+            background: linear-gradient(180deg, #0A246A, #A6CAF0);
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+        }
+
+        .window-content {
+            padding: 20px;
+        }
+
+        .bom-form {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #FFFFFF;
+            border: 1px solid #7F9DB9;
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #003399;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #7F9DB9;
+            border-radius: 2px;
+            background: #FFFFFF;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .component-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+            border: 1px solid #7F9DB9;
+            border-radius: 3px;
+            padding: 5px 15px;
+            color: #003399;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+        }
+
+        a.btn {
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="window-title">
+            Ajouter des BOMs au projet
+        </div>
+        <div class="window-content">
+            <form action="{{ url_for('add_boms', project_id=project_id) }}" method="POST" enctype="multipart/form-data">
+                <div id="bom-container">
+                    <div class="bom-form">
+                        <div class="form-group">
+                            <label for="bom_name">Nom du BOM:</label>
+                            <input type="text" name="bom_name[]" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description_bom">Description:</label>
+                            <textarea name="description_bom[]" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Composants:</label>
+                            <div class="components-container">
+                                <div class="component-group">
+                                    <input type="text" name="components[]" required>
+                                    <button type="button" class="btn" onclick="addComponent(this)">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="spec">Spécifications:</label>
+                            <textarea name="spec[]" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="linkProduct">Lien du produit:</label>
+                            <input type="url" name="linkProduct[]" placeholder="https://..." pattern="https?://.+" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn" onclick="addBomForm()">Ajouter un autre BOM</button>
+                <button type="submit" class="btn">Enregistrer les BOMs</button>
+                <a href="{{ url_for('project_bom', project_id=project_id) }}" class="btn">Retour à la liste</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function addComponent(button) {
+            const container = button.closest('.components-container');
+            const newGroup = document.createElement('div');
+            newGroup.className = 'component-group';
+            newGroup.innerHTML = `
+                <input type="text" name="components[]" required>
+                <button type="button" class="btn" onclick="removeComponent(this)">-</button>
+            `;
+            container.appendChild(newGroup);
+        }
+
+        function removeComponent(button) {
+            button.parentElement.remove();
+        }
+
+        function addBomForm() {
+            const container = document.getElementById('bom-container');
+            const newForm = container.children[0].cloneNode(true);
+            
+            // Nettoyer les champs du nouveau formulaire
+            const inputs = newForm.getElementsByTagName('input');
+            for (let input of inputs) {
+                if (input.type !== 'button') {
+                    input.value = '';
+                }
+            }
+            const textareas = newForm.getElementsByTagName('textarea');
+            for (let textarea of textareas) {
+                textarea.value = '';
+            }
+            
+            // Réinitialiser les composants à un seul champ
+            const componentsContainer = newForm.querySelector('.components-container');
+            const firstComponentGroup = componentsContainer.querySelector('.component-group').cloneNode(true);
+            componentsContainer.innerHTML = '';
+            componentsContainer.appendChild(firstComponentGroup);
+            
+            container.appendChild(newForm);
+        }
+    </script>
+</body>
+</html> 

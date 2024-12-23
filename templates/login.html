@@ -6,24 +6,23 @@
         <title>Mon appli</title>
         <style>
             body {
-                background-color: #c0c0c0;
-                font-family: 'MS Sans Serif', Tahoma, sans-serif;
+                background: #ECE9D8;
+                font-family: 'Tahoma', sans-serif;
                 padding: 20px;
             }
 
             .window {
-                background-color: #c0c0c0;
-                border: 2px solid;
-                border-color: #ffffff #808080 #808080 #ffffff;
-                box-shadow: 1px 1px 0 0 #000;
-                padding: 2px;
+                background: #FFFFFF;
+                border: 1px solid #0A246A;
+                border-radius: 3px;
+                box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
                 width: 300px;
                 margin: 50px auto;
             }
 
             .title-bar {
-                background: linear-gradient(90deg, #000080, #1084d0);
-                padding: 3px;
+                background: linear-gradient(180deg, #0A246A, #A6CAF0);
+                padding: 6px 10px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -36,38 +35,44 @@
             }
 
             .window-body {
-                padding: 10px;
-                background-color: #c0c0c0;
+                padding: 15px;
+                background: #F0F0F0;
             }
 
             input[type="text"], input[type="password"] {
-                border: 2px solid;
-                border-color: #808080 #ffffff #ffffff #808080;
-                background-color: #ffffff;
-                padding: 3px;
+                border: 1px solid #7F9DB9;
+                background: #FFFFFF;
+                padding: 4px;
                 width: 200px;
+                font-family: 'Tahoma', sans-serif;
             }
 
             input[type="submit"] {
-                background-color: #c0c0c0;
-                border: 2px solid;
-                border-color: #ffffff #808080 #808080 #ffffff;
+                background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+                border: 1px solid #7F9DB9;
+                border-radius: 3px;
                 padding: 5px 20px;
+                color: #003399;
                 cursor: pointer;
-                font-family: 'MS Sans Serif', Tahoma, sans-serif;
+                font-family: 'Tahoma', sans-serif;
+            }
+
+            input[type="submit"]:hover {
+                background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
             }
 
             input[type="submit"]:active {
-                border-color: #808080 #ffffff #ffffff #808080;
+                background: #D5E5F7;
             }
 
             label {
                 display: inline-block;
                 width: 80px;
+                color: #003399;
             }
 
             p {
-                margin: 10px 0;
+                margin: 12px 0;
             }
         </style>
     </head>

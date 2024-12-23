@@ -3,6 +3,7 @@ import sys
 import json
 from dotenv import load_dotenv
 import sqlite3
+from pathlib import Path
 # Charger les variables d'environnement
 load_dotenv(os.path.join(os.path.dirname(__file__),'..','.env'))
 # Récupérer la variable PATH_DATA de l'environnement
@@ -85,7 +86,7 @@ class Projet:
                 "create_date":self.create_date,
                 "status":self.status,
                 "status_code":self.status_code,
-                "Bom":{}
+                "Boms": []
             }
 
             ### MERGE FICHIER JSON
@@ -122,8 +123,38 @@ class Projet:
         except Exception as e:
             print(f"ERROR CODE : {e}")
 
+    def get_last_project_id(self):
+        try:
+            db_path = os.path.join(path_data, "PLM.db")
+            connection = sqlite3.connect(db_path)
+            curseur = connection.cursor()
+            curseur.execute("SELECT MAX(ID) FROM project")
+            last_id = curseur.fetchone()[0]
+            curseur.close()
+            connection.close()
+            return last_id if last_id is not None else 0
+        except Exception as e:
+            print(f"Erreur lors de la récupération du dernier ID: {e}")
+            return 0
 
-
+    def load_projects(self):
+        """
+        Charge les projets depuis le fichier JSON.
+        Retourne une liste vide si le fichier n'existe pas ou en cas d'erreur.
+        """
+        try:
+            json_path = os.path.join(path_data, "projet.json")
+            if not os.path.exists(json_path):
+                return []
+                
+            with open(json_path, "r", encoding="utf-8") as f:
+                projects = json.load(f)
+                if not isinstance(projects, list):
+                    return []
+                return projects
+        except Exception as e:
+            print(f"Erreur lors du chargement des projets: {e}")
+            return []
 
 #init=Projet()
 #name="Malaga"
@@ -133,3 +164,4 @@ class Projet:
 #status="InProgess"
 #init.add_projet(name,description,manager,create_date,status)
 #init.show_projet()
+

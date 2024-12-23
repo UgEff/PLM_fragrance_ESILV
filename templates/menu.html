@@ -2,24 +2,107 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='menu.css') }}"
-    />
-    <title>Menu</title>
+    <title>Menu - PLM System</title>
+    <style>
+      body {
+        background: #ECE9D8;
+        font-family: 'Tahoma', sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .window {
+        background: #FFFFFF;
+        border: 1px solid #0A246A;
+        border-radius: 3px;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        margin: 20px auto;
+        max-width: 600px;
+      }
+
+      .window-title {
+        background: linear-gradient(180deg, #0A246A, #A6CAF0);
+        color: white;
+        padding: 6px 10px;
+        font-weight: bold;
+      }
+
+      .window-content {
+        padding: 20px;
+      }
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: #000000;
+        background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+        border: 1px solid #7F9DB9;
+        border-radius: 3px;
+      }
+
+      .menu-item:hover {
+        background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+
+      .logout-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(180deg, #FF4444, #CC0000);
+        border: 1px solid #AA0000;
+        border-radius: 3px;
+        padding: 8px 15px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      }
+
+      .logout-button:hover {
+        background: linear-gradient(180deg, #FF6666, #FF0000);
+      }
+    </style>
   </head>
   <body>
-    <h1>🖥️ Menu</h1>
-    <nav>
-      <ul>
-        <li>
-          <a href="{{ url_for('init_project') }}">📁 Initialiser un Projet</a>
-        </li>
-        <li>
-          <a href="{{ url_for('project_list') }}">📋 Liste des Projets</a>
-        </li>
-      </ul>
-    </nav>
+    <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+    <div class="window">
+      <div class="window-title">
+        Menu Principal
+      </div>
+      <div class="window-content">
+        <div class="menu">
+          <a href="{{ url_for('init_project') }}" class="menu-item">
+            <img src="{{ url_for('static', filename='icons/new.png') }}" class="icon" alt="✨">
+            Nouveau Projet
+          </a>
+          <a href="{{ url_for('project_list') }}" class="menu-item">
+            <img src="{{ url_for('static', filename='icons/list.png') }}" class="icon" alt="📋">
+            Liste Projets
+          </a>
+          <a href="{{ url_for('comments') }}" class="menu-item">
+            <img src="{{ url_for('static', filename='icons/comment.png') }}" class="icon" alt="💬">
+            Ajouter Commentaire
+          </a>
+          <a href="{{ url_for('view_comments') }}" class="menu-item">
+            <img src="{{ url_for('static', filename='icons/view.png') }}" class="icon" alt="👀">
+            Voir Commentaires
+          </a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

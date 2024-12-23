@@ -8,6 +8,91 @@
       href="{{ url_for('static', filename='bom_list.css') }}"
     />
     <title>Détails du Projet</title>
+  <style>
+    body {
+      background-color: #ECE9D8;
+      font-family: 'Tahoma', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .project-container {
+      background: #FFFFFF;
+      border: 1px solid #7F9DB9;
+      border-radius: 3px;
+      padding: 10px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    }
+
+    h1, h2 {
+      background: linear-gradient(180deg, #0A246A, #A6CAF0);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      margin-top: 0;
+    }
+
+    .project-details, .bom-details {
+      background: #FFFFFF;
+      border: 1px solid #D4D0C8;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .label {
+      color: #003399;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin: 5px 0;
+      padding: 5px;
+      border-bottom: 1px solid #D4D0C8;
+    }
+
+    .back-button {
+      display: inline-block;
+      background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+      border: 1px solid #7F9DB9;
+      border-radius: 3px;
+      padding: 5px 15px;
+      color: #003399;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+    }
+
+    .no-bom {
+      background: #F1F1F1;
+      padding: 10px;
+      border: 1px solid #D4D0C8;
+      color: #666666;
+    }
+
+    a {
+      color: #0000FF;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .bom-item {
+      border: 1px solid #D4D0C8;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #F8F8F8;
+    }
+  </style>
   </head>
   <body>
     <div class="project-container">
@@ -26,34 +111,41 @@
         <p><span class="label">Statut :</span> {{ project.status }}</p>
       </section>
 
-      <h2>BOM</h2>
+      <h2>BOMs</h2>
       <section class="bom-details">
-        {% if project.Bom %}
+        {% if project.Boms and project.Boms|length > 0 %}
         <ul>
-
-            <li><strong>Nom :</strong> {{ project.Bom.nameBom }}</li>
-            <li><strong>Description :</strong> {{ project.Bom.descriptionBom }}</li>
-            <li><strong>Composants :</strong>
-                <ul>
-                    {% for composant in project.Bom.composantBom %}
-                        <li>{{ composant }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-            <li><strong>Spécifications :</strong> {{ project.Bom.specBom }}</li>
-            <li><strong>Lien du produit :</strong> {{ project.Bom.linkProduct }}</li>
-            {% if project.Bom.linkProduct %}
-                <a href="{{ project.Bom.linkProduct }}" target="_blank">Voir le produit</a>
-            {% else %}
-                Aucun lien disponible
-            {% endif %}
-
+            {% for bom in project.Boms %}
+            <div class="bom-item">
+                <li><strong>Nom :</strong> {{ bom.nameBom }}</li>
+                <li><strong>Description :</strong> {{ bom.descriptionBom }}</li>
+                <li><strong>Composants :</strong>
+                    <ul>
+                        {% for composant in bom.composantBom %}
+                            <li>{{ composant }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><strong>Spécifications :</strong> {{ bom.specBom }}</li>
+                <li><strong>Lien du produit :</strong> 
+                    {% if bom.linkProduct %}
+                        <a href="{{ bom.linkProduct }}" target="_blank">Voir le produit</a>
+                    {% else %}
+                        Aucun lien disponible
+                    {% endif %}
+                </li>
+            </div>
+            {% endfor %}
         </ul>
         {% else %}
         <div class="no-bom">
-          <p>Aucun BOM disponible pour ce projet.</p>
+            <p>Aucun BOM disponible pour ce projet.</p>
         </div>
         {% endif %}
+        
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('add_boms', project_id=project.id) }}" class="back-button">Ajouter des BOMs</a>
+        </div>
       </section>
 
       <a href="{{ url_for('project_list') }}" class="back-button"

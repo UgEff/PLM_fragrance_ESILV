@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <style>
+        body {
+            background: #ECE9D8;
+            font-family: 'Tahoma', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .window {
+            background: #FFFFFF;
+            border: 1px solid #0A246A;
+            border-radius: 3px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            margin: 50px auto;
+            width: 400px;
+        }
+
+        .title-bar {
+            background: linear-gradient(180deg, #0A246A, #A6CAF0);
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+        }
+
+        .window-body {
+            padding: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #7F9DB9;
+            border-radius: 2px;
+            background: #FFFFFF;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(180deg, #EAF1FB, #D5E5F7);
+            border: 1px solid #7F9DB9;
+            border-radius: 3px;
+            padding: 5px 15px;
+            color: #003399;
+            cursor: pointer;
+            font-family: 'Tahoma', sans-serif;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(180deg, #D5E5F7, #EAF1FB);
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+            color: #003399;
+        }
+
+        h3 {
+            color: #003399;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            color: #0A246A;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            Inscription
+        </div>
+        <div class="window-body">
+            <form action={{url_for('register')}} method="POST">
+                <h3>Authentification Admin</h3>
+                <p>
+                    <label for="admin_username">Admin : </label>
+                    <input type="text" name="admin_username" id="admin_username" required>
+                </p>
+                <p>
+                    <label for="admin_password">Mot de passe : </label>
+                    <input type="password" name="admin_password" id="admin_password" required>
+                </p>
+                
+                <h3>Nouveau compte</h3>
+                <p>
+                    <label for="username">User : </label>
+                    <input type="text" name="username" id="username" required>
+                </p>
+                <p>
+                    <label for="password">Password : </label>
+                    <input type="password" name="password" id="password" required>
+                </p>
+                <p>
+                    <label for="role">Rôle : </label>
+                    <select name="role" id="role" required>
+                        <option value="manager">Manager</option>
+                        <option value="partenaire">Partenaire</option>
+                    </select>
+                </p>
+                <p style="text-align: center;">
+                    <input type="submit" value="CRÉER">
+                </p>
+            </form>
+            <p style="text-align: center;">
+                <a href="{{ url_for('home') }}">Retour à la connexion</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

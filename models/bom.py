@@ -17,43 +17,42 @@ class Bom:
                     
 
     
-    def add_bom_project(self,nameBom,descriptionBom,composantBom,specBom,linkProduct):
-            json_path = os.path.join(path_data, "projet.json")
+    def add_bom_project(self, project_id, nameBom, descriptionBom, composantBom, specBom, linkProduct):
+        json_path = os.path.join(path_data, "projet.json")
 
-            try:
-                if os.path.exists(json_path) and os.path.getsize(json_path)>0:
-                    #load json file
-                    with open(path_data+"projet.json",'r') as file:
-                        data_previous=json.load(file)
-                        if not isinstance(data_previous,list):
-                            raise ValueError("le fichier json ne content pas une liste valide")
-                
-                    print(f"data_previous: {data_previous}")
-                
-                else:
-                    data_previous=[]
+        try:
+            # Charger le fichier JSON existant
+            with open(json_path, 'r') as file:
+                projects = json.load(file)
 
-                tab_id=[]
-                for project in data_previous:
-                        tab_id.append(project['id'])
+            # Trouver le projet correspondant
+            for project in projects:
+                if project["id"] == int(project_id):
+                    # S'assurer que la liste Boms existe
+                    if "Boms" not in project:
+                        project["Boms"] = []
+                    
+                    # Créer un nouveau BOM
+                    new_bom = {
+                        "nameBom": nameBom,
+                        "descriptionBom": descriptionBom,
+                        "composantBom": composantBom,
+                        "specBom": specBom,
+                        "linkProduct": linkProduct
+                    }
+                    
+                    # Ajouter le BOM à la liste des BOMs du projet
+                    project["Boms"].append(new_bom)
+                    break
 
-                if project["id"]==tab_id[-1]:
-                    project["Bom"] = {
-                    "nameBom": nameBom,
-                    "descriptionBom": descriptionBom,
-                    "composantBom": composantBom,
-                    "specBom": specBom,
-                    "linkProduct": linkProduct
-                }
+            # Sauvegarder les modifications
+            with open(json_path, "w") as file:
+                json.dump(projects, file, indent=4)
+            print(f"BOM ajouté au projet ID {project_id} avec succès.")
+        
+        except Exception as e:
+            print(f"Error : {e}")
+            raise e
 
-                # Sauvegarder les données mises à jour
-                with open(json_path, "w") as file:
-                    json.dump(data_previous, file, indent=4)
-                print(f"BOM ajouté au projet ID {tab_id[-1]} avec succès.")
-            
-            except Exception as e:
-                print(f"Error : {e}")
-                data_previous=[]
-            
 #init=Bom()
 #init.add_bom_project('test1','test2','test3','test4')

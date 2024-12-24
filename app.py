@@ -24,7 +24,10 @@ def home():
 def menu():
     if 'username' not in session:
         return redirect(url_for('home'))
-    return render_template('menu.html', is_admin=(session.get('role_code') == 1))
+    role_code = session.get('role_code')
+    return render_template('menu.html', 
+                        is_admin=(role_code == 1),
+                        is_manager=(role_code == 2))
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -52,6 +55,11 @@ def login():
 
 @app.route('/init_project', methods=["GET", "POST"])
 def init_project():
+    # Seuls admin et manager peuvent créer des projets
+    if 'username' not in session or (session.get('role_code') != 1 and session.get('role_code') != 2):
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+
     init=Projet()
     if request.method == "POST":
         donnees = request.form
@@ -95,11 +103,19 @@ def bom():
 
 @app.route('/project_list')
 def project_list():
+    # Tous les utilisateurs peuvent voir la liste des projets
+    if 'username' not in session:
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('home'))
+    
     projet = Projet()
     projects_list = projet.load_projects()
     if projects_list is None:
-        projects_list = []  # Évite l'erreur 'NoneType' is not iterable
-    return render_template("project_list.html", posts=projects_list)
+        projects_list = []
+    return render_template("project_list.html", 
+                         posts=projects_list,
+                         is_admin=(session.get('role_code') == 1),
+                         is_manager=(session.get('role_code') == 2))
 
 @app.route("/change_status", methods=["GET", "POST"])
 def change_status():
@@ -125,6 +141,11 @@ def project_bom(project_id):
 
 @app.route('/add_boms/<int:project_id>', methods=['GET', 'POST'])
 def add_boms(project_id):
+    # Seuls admin et manager peuvent ajouter des BOMs
+    if 'username' not in session or (session.get('role_code') != 1 and session.get('role_code') != 2):
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+
     init = Bom()
     if request.method == "POST":
         try:
@@ -158,16 +179,25 @@ def add_boms(project_id):
 
     return render_template('add_boms.html', project_id=project_id)
 
-@app.route('/comments')
+@app.route('/comments', methods=['GET', 'POST'])
 def comments():
+    # Tous les utilisateurs peuvent voir et ajouter des commentaires
+    if 'username' not in session:
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+    
     projet = Projet()
     projects = projet.load_projects()
     if projects is None:
-        projects = []  # Évite l'erreur 'NoneType' is not iterable
+        projects = []
     comments = load_comments()
     if comments is None:
         comments = []
-    return render_template('comments.html', projects=projects, comments=comments)
+    return render_template('comments.html', 
+                         projects=projects, 
+                         comments=comments,
+                         is_admin=(session.get('role_code') == 1),
+                         is_manager=(session.get('role_code') == 2))
 
 @app.route('/get_boms/<int:project_id>')
 def get_boms(project_id):
@@ -214,6 +244,11 @@ def add_comment():
 
 @app.route('/update_comment_status', methods=['POST'])
 def update_comment_status():
+    # Seuls admin et manager peuvent changer le statut des commentaires
+    if 'username' not in session or (session.get('role_code') != 1 and session.get('role_code') != 2):
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+
     try:
         comment_id = request.form.get('comment_id')
         json_path = os.path.join(path_data, "comments.json")

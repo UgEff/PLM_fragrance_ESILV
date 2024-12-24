@@ -1,52 +1,31 @@
 [
     {
         "id": 1,
-        "name": "Chanel n\u00b05",
-        "description": "Premier parfum de la gamme 2025",
+        "name": "Parfum test  n\u00b01",
+        "description": "Description du test n\u00b01",
         "manager": "Idir GUETTAB",
-        "create_date": "2025-01-01",
+        "create_date": "2024-12-24",
         "status": "IN PROGRESS",
         "status_code": 0,
         "Boms": [
             {
-                "nameBom": "Pompe",
-                "descriptionBom": "Pompe du parfum dor\u00e9e",
+                "nameBom": "Flacon Test n\u00b01",
+                "descriptionBom": "Description du Flacon test n\u00b01",
                 "composantBom": [
-                    "Acier",
-                    "ressort",
+                    "verre",
                     "plastique"
                 ],
-                "specBom": "qualiter premium",
-                "linkProduct": "https://www.google.com/search?client=firefox-b-d&q=youtube"
+                "specBom": "spec bom test n\u00b01",
+                "linkProduct": "https://test_n\u00b01.com"
             },
             {
-                "nameBom": "corps",
-                "descriptionBom": "corps test",
+                "nameBom": "BOM test 1 _n\u00b02",
+                "descriptionBom": "bom 2 descriptions ",
                 "composantBom": [
-                    "cofk"
+                    "composant n\u00b02"
                 ],
-                "specBom": "fofjjff",
+                "specBom": "jffhgvvdhbd",
                 "linkProduct": "https://google.com"
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "name": "Yves SAint laurent",
-        "description": "test pour YSL",
-        "manager": "Killyan",
-        "create_date": "2025-10-01",
-        "status": "IN PROGRESS",
-        "status_code": 0,
-        "Boms": [
-            {
-                "nameBom": "parfun",
-                "descriptionBom": "parfum",
-                "composantBom": [
-                    "pibfn"
-                ],
-                "specBom": ";,kdld",
-                "linkProduct": "https://www.sephora.fr/p/bleu-de-chanel---eau-de-parfum-P1922003.html"
             }
         ]
     }

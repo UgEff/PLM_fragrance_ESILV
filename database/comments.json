@@ -1,29 +1,11 @@
 [
     {
         "project_id": 1,
-        "project_name": "Chanel n\u00b05",
-        "bom_name": "Pompe",
-        "content": "Leo droit gerer cela",
-        "date": "2024-12-23 02:05:22",
+        "project_name": "Parfum test  n\u00b01",
+        "bom_name": "Flacon Test n\u00b01",
+        "content": "il faudrait revoir la formule du composant afin d'avoir un plus rigide",
+        "date": "2024-12-24 10:45:31",
         "id": 1,
-        "status": "Trait\u00e9"
-    },
-    {
-        "project_id": 1,
-        "project_name": "Chanel n\u00b05",
-        "bom_name": "Pompe",
-        "content": "super",
-        "date": "2024-12-23 02:05:49",
-        "id": 2,
-        "status": "Trait\u00e9"
-    },
-    {
-        "project_id": 1,
-        "project_name": "Chanel n\u00b05",
-        "bom_name": "Pompe",
-        "content": "ce commentaire est juste un test",
-        "date": "2024-12-23 02:07:57",
-        "id": 3,
         "status": "Trait\u00e9"
     }
 ]

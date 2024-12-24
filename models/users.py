@@ -145,6 +145,57 @@ class User:
             print(f"Erreur lors de la suppression de l'utilisateur : {e}")
             raise e
 
+    def check_permission(self, role_code, required_roles):
+        """
+        Vérifie si le rôle de l'utilisateur est autorisé
+        required_roles: liste des codes de rôle autorisés
+        """
+        return role_code in required_roles
+
+    def is_manager_or_admin(self, role_code):
+        """
+        Vérifie si l'utilisateur est manager ou admin
+        """
+        return role_code in [1, 2]  # 1 = admin, 2 = manager
+
+    def is_user(self, role_code):
+        """
+        Vérifie si l'utilisateur est un utilisateur standard
+        """
+        return role_code == 3  # 3 = utilisateur standard
+
+    def get_user_permissions(self, role_code):
+        """
+        Retourne les permissions selon le rôle
+        """
+        if role_code == 1:  # Admin
+            return {
+                "can_create_project": True,
+                "can_add_bom": True,
+                "can_manage_users": True,
+                "can_update_status": True,
+                "can_view_all": True,
+                "can_comment": True
+            }
+        elif role_code == 2:  # Manager
+            return {
+                "can_create_project": True,
+                "can_add_bom": True,
+                "can_manage_users": False,
+                "can_update_status": True,
+                "can_view_all": True,
+                "can_comment": True
+            }
+        else:  # Utilisateur standard
+            return {
+                "can_create_project": False,
+                "can_add_bom": False,
+                "can_manage_users": False,
+                "can_update_status": False,
+                "can_view_all": True,
+                "can_comment": True
+            }
+
 #init=User()
 #init.create_user("idir","bonjour","manager")
 #init.valid_connection("idir","admin")

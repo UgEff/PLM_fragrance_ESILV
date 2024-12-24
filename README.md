@@ -2,72 +2,83 @@
 
 ## 📖 Description
 
-**PLM Projet ESILV** est une application Flask conçue pour gérer des projets et leurs BOM (Bill of Materials). Elle permet aux utilisateurs de :
-
-- Créer et visualiser des projets.
-- Associer des BOM avec des spécifications aux projets.
-- Suivre l'évolution des statuts des projets.
-
-L'application est idéale pour la gestion simplifiée de projets dans un environnement académique ou industriel.
+**PLM Projet ESILV** est une application Flask de gestion de cycle de vie des produits (PLM). Elle permet une gestion complète des projets, des BOM (Bill of Materials) et des utilisateurs avec différents niveaux d'accès.
 
 ---
 
 ## ✨ Fonctionnalités
 
-- **🔐 Connexion utilisateur :** Interface pour se connecter et accéder aux fonctionnalités.
-- **📝 Création de projets :** Ajout de projets avec des détails comme nom, description et manager.
-- **📋 Gestion des BOM :** Associez des BOM (Bill of Materials) avec des spécificités à vos projets.
-- **👀 Visualisation :** Affichez les projets créés et leurs BOM associés.
-- **📊 Suivi des statuts :** Gestion des statuts des projets avec des mises à jour comme "IN PROGRESS", "DONE", ou "CANCEL".
-- **🔗 Liens hypertextes :** Ajout d'hyperliens SolidWorks dans les projets pour un suivi avancé (fonctionnalité en cours de développement).
+### 🔐 Gestion des Utilisateurs
+- **Système de Rôles :**
+  - **Admin :** Accès complet à toutes les fonctionnalités
+  - **Manager :** Gestion des projets et des BOM
+  - **Utilisateur :** Consultation et commentaires
+- **Authentification sécurisée**
+- **Gestion des utilisateurs** (création, suppression, liste)
+
+### 📝 Gestion des Projets
+- **Création de projets** (Admin et Manager)
+- **Liste des projets** (tous les utilisateurs)
+- **Suivi des statuts** (IN PROGRESS, DONE, CANCEL)
+- **Gestion des BOM** avec spécifications
+- **Liens vers les fichiers SolidWorks**
+
+### 💬 Système de Commentaires
+- **Ajout de commentaires** (tous les utilisateurs)
+- **Visualisation des commentaires**
+- **Gestion des statuts** des commentaires (Admin et Manager)
+
+### 🔒 Contrôle d'Accès
+- **Restrictions basées sur les rôles**
+- **Sessions sécurisées**
+- **Protection des routes sensibles**
 
 ---
 
 ## 🖥️ Installation
 
 ### Prérequis
-
 - Python 3.8+
 - Flask
-- Un environnement virtuel Python (optionnel mais recommandé)
+- SQLite3
+- Environnement virtuel Python (recommandé)
 
-## 🔧 Configuration
+### Configuration
 
-1. Clonez le dépôt Git
-
+1. **Cloner le dépôt**
    ```bash
-       git clone <URL_DU_DEPOT>
-       cd PLM_PROJET
+   git clone <URL_DU_DEPOT>
+   cd PLM_PROJET
    ```
 
-2. Installer les dépendances  
-   Installez les dépendances nécessaires depuis le fichier requirements.txt
-
+2. **Créer et activer l'environnement virtuel**
    ```bash
-   pip install -r requirement.txt
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   venv\Scripts\activate     # Windows
    ```
 
-3. Créer un répertoire data
-
+3. **Installer les dépendances**
    ```bash
-   mkdir data
+   pip install -r requirements.txt
+   ```
+
+4. **Configuration de l'environnement**
+   ```bash
+   mkdir database
    cp .env.example .env
    ```
-
-4. Copier le chemin du répertoire data dans le fichier .env
-
-   ```makefile
-       PATH_DATA=<chemin_vers_repertoire_data>
+   Éditez `.env` avec votre chemin de données :
+   ```
+   PATH_DATA=<chemin_vers_repertoire_data>
    ```
 
-5. Initialiser la base de données
-
+5. **Initialiser la base de données**
    ```bash
    python database/init_database.py
    ```
 
-6. Lancer l'application depuis le main.py
-
+6. **Lancer l'application**
    ```bash
    python main.py
    ```
@@ -76,44 +87,86 @@ L'application est idéale pour la gestion simplifiée de projets dans un environ
 
 ## 🚀 Utilisation
 
-Accédez à l'application à l'adresse : http://127.0.0.1:5000
-Connectez-vous avec un compte utilisateur.
-Créez et gérez vos projets et BOM via l'interface.
+### Accès à l'application
+- URL : http://127.0.0.1:5000
+- Compte admin par défaut :
+  - Utilisateur : admin
+  - Mot de passe : admin
 
-## 📂 Structure du projet
+### Niveaux d'accès
+
+#### 👑 Administrateur
+- Gestion complète des utilisateurs
+- Création et gestion des projets
+- Gestion des BOM
+- Gestion des commentaires
+- Modification des statuts
+
+#### 👨‍💼 Manager
+- Création et gestion des projets
+- Gestion des BOM
+- Ajout et gestion des commentaires
+- Modification des statuts
+
+#### 👤 Utilisateur Standard
+- Consultation des projets
+- Consultation des BOM
+- Ajout de commentaires
+- Consultation des commentaires
+
+---
+
+## 📂 Structure du Projet
 
 ```bash
 PLM_PROJET/
-├── database/               # Gestion des données
-│   ├── init_database.py    # Script d'initialisation de la base de données SQLite
-│   ├── PLM.db              # Fichier de la base de données SQLite
-│   └── projet.json         # Fichier JSON pour les données des projets (alternative ou complément à SQLite)
+├── database/               # Gestion des bases de données
+│   ├── init_database.py    # Initialisation SQLite
+│   ├── PLM.db             # Base de données SQLite
+│   └── projet.json        # Données JSON des projets
 │
-├── models/                 # Modèles Python pour la logique métier
-│   ├── __init__.py         # Initialisation du package "models"
-│   ├── bom.py              # Modèle pour la gestion des BOM
-│   ├── load_projet.py      # Gestion du chargement des projets
-│   ├── projets.py          # Modèle pour les projets
-│   └── users.py            # Gestion des utilisateurs et des profils
+├── models/                 # Logique métier
+│   ├── bom.py             # Gestion des BOM
+│   ├── load_projet.py     # Chargement des projets
+│   ├── projets.py         # Gestion des projets
+│   └── users.py           # Gestion des utilisateurs
 │
-├── static/                 # Ressources statiques (CSS, images, JS, etc.)
-│   └── style.css           # Feuille de style pour l'interface utilisateur
+├── static/                 # Ressources statiques
+│   └── style.css          # Styles CSS
 │
-├── templates/              # Templates HTML pour l'interface utilisateur
-│   ├── bom.html            # Formulaire pour créer un BOM
-│   ├── bom_list.html       # Liste des BOM
-│   ├── init_project.html   # Formulaire pour créer un projet
-│   ├── login.html          # Page de connexion utilisateur
-│   ├── menu.html           # Menu principal
-│   └── project_list.html   # Liste des projets
+├── templates/             # Templates HTML
+│   ├── bom.html           # Création de BOM
+│   ├── bom_list.html      # Liste des BOM
+│   ├── comments.html      # Gestion des commentaires
+│   ├── create_user.html   # Création d'utilisateur
+│   ├── init_project.html  # Création de projet
+│   ├── login.html         # Page de connexion
+│   ├── menu.html          # Menu principal
+│   ├── project_list.html  # Liste des projets
+│   ├── user_list.html     # Liste des utilisateurs
+│   └── view_comments.html # Vue des commentaires
 │
-├── .env                    # Fichier des variables d'environnement (configurations sensibles)
-├── app.py                  # Application Flask principale
-├── main.py                 # Point d'entrée de l'application (exécution)
-├── README.md               # Documentation du projet
-└── requirements.txt        # Liste des dépendances Python nécessaires
+├── .env                   # Variables d'environnement
+├── app.py                 # Application Flask
+├── main.py               # Point d'entrée
+└── requirements.txt      # Dépendances Python
 ```
+
+---
+
+## 🔄 Base de Données
+
+### SQLite (PLM.db)
+- Table Users : Gestion des utilisateurs et rôles
+- Autres tables selon besoins
+
+### JSON (projet.json)
+- Stockage des données de projets
+- Gestion des BOM
+- Stockage des commentaires
+
+---
 
 ## ⚖️ Licence
 
-Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus d'informations.
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.

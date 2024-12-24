@@ -92,6 +92,41 @@
       padding: 10px;
       background: #F8F8F8;
     }
+
+    .download-link {
+      color: #003399;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      margin: 2px 0;
+    }
+
+    .download-link:hover {
+      text-decoration: underline;
+    }
+
+    .download-icon {
+      margin-right: 5px;
+      font-size: 16px;
+    }
+
+    .documents-list {
+      margin-top: 10px;
+      padding: 10px;
+      background: #F5F9FF;
+      border: 1px solid #D5E5F7;
+      border-radius: 3px;
+    }
+
+    .documents-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0;
+    }
+
+    .documents-list li {
+      margin: 5px 0;
+    }
   </style>
   </head>
   <body>
@@ -134,6 +169,22 @@
                         Aucun lien disponible
                     {% endif %}
                 </li>
+                {% if bom.documents %}
+                <div class="documents-list">
+                    <strong>Documents du BOM:</strong>
+                    <ul>
+                        {% for doc in bom.documents %}
+                        <li>
+                            <a href="{{ url_for('download_file', filename=doc.path) }}" class="download-link">
+                                <span class="download-icon">📥</span>
+                                {{ doc.name }}
+                            </a>
+                            <small>(Ajouté le {{ doc.upload_date }})</small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
         </ul>

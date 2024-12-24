@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session, send_from_directory
 from models.users import User
 from models.projets import Projet
 from models.bom import Bom
@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 import json
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -15,6 +16,18 @@ path_data = os.getenv("PATH_DATA")
 
 app = Flask(__name__)
 app.secret_key = 'votre_cle_secrete'
+
+# Définir les extensions autorisées
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'xls', 'xlsx', 'png', 'jpg', 'jpeg'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def create_project_directories(project_name):
+    """Crée les répertoires nécessaires pour un nouveau projet"""
+    base_path = os.path.join(path_data, "doc", secure_filename(project_name))
+    os.makedirs(base_path, exist_ok=True)
+    return base_path
 
 @app.route('/')
 def home():
@@ -55,51 +68,78 @@ def login():
 
 @app.route('/init_project', methods=["GET", "POST"])
 def init_project():
-    # Seuls admin et manager peuvent créer des projets
     if 'username' not in session or (session.get('role_code') != 1 and session.get('role_code') != 2):
         flash("Accès non autorisé", "error")
         return redirect(url_for('menu'))
 
-    init=Projet()
+    init = Projet()
     if request.method == "POST":
-        donnees = request.form
-        print(f"les données de notre projets:{donnees}")
-        titre = donnees.get('titre')
-        description = donnees.get('description')
-        manager = donnees.get('manager')
-        create_date = donnees.get('create_date')
-        status=donnees.get('status')
-        init.add_projet(titre,description,manager,create_date,status)
-        message="ADD PROJET"
-        flash(message, "success")
+        try:
+            donnees = request.form
+            titre = donnees.get('titre')
+            description = donnees.get('description')
+            manager = donnees.get('manager')
+            create_date = donnees.get('create_date')
+            status = donnees.get('status')
 
-        project_id = init.get_last_project_id()
-        return redirect(url_for('bom', project_id=project_id))
+            # Créer les répertoires du projet
+            project_path = create_project_directories(titre)
+
+            # Gérer les documents du projet
+            documents = []
+            if 'documents' in request.files:
+                files = request.files.getlist('documents')
+                for file in files:
+                    if file and allowed_file(file.filename):
+                        filename = secure_filename(file.filename)
+                        file_path = os.path.join(project_path, filename)
+                        file.save(file_path)
+                        documents.append({
+                            "name": filename,
+                            "path": os.path.relpath(file_path, path_data),
+                            "upload_date": datetime.now().strftime("%Y-%m-%d")
+                        })
+
+            # Ajouter le projet avec ses documents
+            project_id = init.add_projet(titre, description, manager, create_date, status, documents)
+            
+            flash("Projet créé avec succès", "success")
+            return redirect(url_for('add_bom', project_id=project_id))
+
+        except Exception as e:
+            flash(f"Erreur lors de la création du projet : {str(e)}", "error")
+            return render_template('init_project.html')
+
     return render_template('init_project.html')
 
-@app.route("/bom",methods=["GET","POST"])
+@app.route("/bom", methods=["GET", "POST"])
 def bom():
-    init=Bom()
+    if 'username' not in session:
+        return redirect(url_for('home'))
+
+    init = Bom()
     try:
-        if request.method=="POST":
+        if request.method == "POST":
             donnees = request.form
-            project_id = donnees.get('project_id')
-            nameBom=donnees.get('bom_name')
-            descriptionBom=donnees.get('description_bom')
-            composantBom=donnees.getlist('components[]')
-            specBom=donnees.get('spec')
-            linkProduct=donnees.get('linkProduct')
+            project_id = int(donnees.get('project_id'))
+            nameBom = donnees.get('bom_name')
+            descriptionBom = donnees.get('description_bom')
+            composantBom = donnees.getlist('components[]')
+            specBom = donnees.get('spec')
+            linkProduct = donnees.get('linkProduct')
 
             init.add_bom_project(project_id, nameBom, descriptionBom, composantBom, specBom, linkProduct)
             return redirect(url_for('project_bom', project_id=project_id))
         else:
             project_id = request.args.get('project_id')
+            if not project_id:
+                flash("ID du projet manquant", "error")
+                return redirect(url_for('project_list'))
             return render_template('bom.html', project_id=project_id)
-            
+
     except Exception as e:
-        print(f"ERROR : {e}")
-        flash(f"Erreur lors de l'ajout du BOM : {e}", "error")
-        return render_template("bom.html")
+        flash(f"Erreur lors de l'ajout du BOM : {str(e)}", "error")
+        return redirect(url_for('project_list'))
 
 @app.route('/project_list')
 def project_list():
@@ -375,3 +415,113 @@ def delete_user(username):
         flash(f"Erreur lors de la suppression : {str(e)}", "error")
     
     return redirect(url_for('user_list'))
+
+@app.route('/add_bom_document/<int:project_id>/<string:bom_name>', methods=['POST'])
+def add_bom_document(project_id, bom_name):
+    if 'username' not in session or (session.get('role_code') != 1 and session.get('role_code') != 2):
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+
+    try:
+        # Charger le projet
+        init = Load_projet()
+        projects = init.load_projet()
+        project = next((p for p in projects if p["id"] == project_id), None)
+        
+        if not project:
+            flash("Projet non trouvé", "error")
+            return redirect(url_for('project_list'))
+
+        # Créer le répertoire BOM s'il n'existe pas
+        bom_path = os.path.join(path_data, "doc", 
+                               secure_filename(project["name"]),
+                               "bom_" + secure_filename(bom_name))
+        os.makedirs(bom_path, exist_ok=True)
+
+        # Gérer les fichiers
+        if 'documents' in request.files:
+            files = request.files.getlist('documents')
+            documents = []
+            for file in files:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(bom_path, filename)
+                    file.save(file_path)
+                    documents.append({
+                        "name": filename,
+                        "path": os.path.relpath(file_path, path_data),
+                        "upload_date": datetime.now().strftime("%Y-%m-%d")
+                    })
+
+            # Mettre à jour le BOM dans le projet
+            for bom in project["Boms"]:
+                if bom["nameBom"] == bom_name:
+                    if "documents" not in bom:
+                        bom["documents"] = []
+                    bom["documents"].extend(documents)
+
+            # Sauvegarder les modifications
+            with open(os.path.join(path_data, "projet.json"), "w") as f:
+                json.dump(projects, f, indent=4)
+
+            flash("Documents ajoutés avec succès", "success")
+        else:
+            flash("Aucun document fourni", "warning")
+
+        return redirect(url_for('project_bom', project_id=project_id))
+
+    except Exception as e:
+        flash(f"Erreur lors de l'ajout des documents : {str(e)}", "error")
+        return redirect(url_for('project_bom', project_id=project_id))
+
+@app.route('/add_bom/<int:project_id>', methods=['GET', 'POST'])
+def add_bom(project_id):
+    if 'username' not in session or (session.get('role_code') != 1 and session.get('role_code') != 2):
+        flash("Accès non autorisé", "error")
+        return redirect(url_for('menu'))
+
+    try:
+        if request.method == "POST":
+            donnees = request.form
+            nameBom = donnees.get('bom_name')
+            descriptionBom = donnees.get('description_bom')
+            composantBom = donnees.getlist('components[]')
+            specBom = donnees.get('spec')
+            linkProduct = donnees.get('linkProduct')
+
+            init = Bom()
+            init.add_bom_project(project_id, nameBom, descriptionBom, composantBom, specBom, linkProduct)
+            
+            flash("BOM ajouté avec succès", "success")
+            return redirect(url_for('project_bom', project_id=project_id))
+        
+        # GET request
+        return render_template('bom.html', project_id=project_id)
+
+    except Exception as e:
+        flash(f"Erreur lors de l'ajout du BOM : {str(e)}", "error")
+        return redirect(url_for('project_list'))
+
+@app.route('/download/<path:filename>')
+def download_file(filename):
+    try:
+        # Vérifier si l'utilisateur est connecté
+        if 'username' not in session:
+            flash("Accès non autorisé", "error")
+            return redirect(url_for('home'))
+        
+        # Vérifier si le fichier existe
+        file_path = os.path.join(path_data, filename)
+        if not os.path.exists(file_path):
+            flash("Le fichier demandé n'existe pas", "error")
+            return redirect(url_for('project_list'))
+            
+        # Le chemin du répertoire sera le dossier parent du fichier
+        directory = os.path.dirname(file_path)
+        filename = os.path.basename(file_path)
+        
+        # Envoyer le fichier
+        return send_from_directory(directory, filename, as_attachment=True)
+    except Exception as e:
+        flash(f"Erreur lors du téléchargement : {str(e)}", "error")
+        return redirect(url_for('project_list'))

@@ -1,10 +1,10 @@
 [
     {
         "project_id": 1,
-        "project_name": "Parfum test  n\u00b01",
-        "bom_name": "Flacon Test n\u00b01",
-        "content": "il faudrait revoir la formule du composant afin d'avoir un plus rigide",
-        "date": "2024-12-24 10:45:31",
+        "project_name": "test",
+        "bom_name": "hfbgd",
+        "content": "tu peux ecrire des commentaire ",
+        "date": "2024-12-24 11:35:23",
         "id": 1,
         "status": "Trait\u00e9"
     }

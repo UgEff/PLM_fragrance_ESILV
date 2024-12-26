@@ -18,8 +18,15 @@
 
 ### 📝 Gestion des Projets
 - **Création de projets** (Admin et Manager)
+  - Ajout d'informations de base (titre, description, manager, date)
+  - Upload de documents multiples (PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG)
+  - Création automatique d'une structure de dossiers
 - **Liste des projets** (tous les utilisateurs)
 - **Suivi des statuts** (IN PROGRESS, DONE, CANCEL)
+- **Gestion des documents**
+  - Téléchargement des documents
+  - Visualisation de la date d'upload
+  - Organisation par projet et par BOM
 - **Gestion des BOM** avec spécifications
 - **Liens vers les fichiers SolidWorks**
 
@@ -125,6 +132,12 @@ PLM_PROJET/
 │   ├── PLM.db             # Base de données SQLite
 │   └── projet.json        # Données JSON des projets
 │
+├── doc/                    # Documents des projets
+│   ├── projet1/           # Documents du projet 1
+│   │   ├── documents/     # Documents généraux
+│   │   └── bom/          # Documents des BOMs
+│   └── projet2/           # Documents du projet 2
+│
 ├── models/                 # Logique métier
 │   ├── bom.py             # Gestion des BOM
 │   ├── load_projet.py     # Chargement des projets
@@ -158,12 +171,8 @@ PLM_PROJET/
 
 ### SQLite (PLM.db)
 - Table Users : Gestion des utilisateurs et rôles
+- Table Projects : Informations de base des projets
 - Autres tables selon besoins
-
-### JSON (projet.json)
-- Stockage des données de projets
-- Gestion des BOM
-- Stockage des commentaires
 
 ---
 
